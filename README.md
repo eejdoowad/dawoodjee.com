@@ -1,4 +1,4 @@
-# blog.dawoodjee.com
+# dawoodjee.com
 
 Based on https://github.com/AustinGreen/gatsby-starter-netlify-cms/
 
