@@ -108,7 +108,7 @@ export default (
 ) => {
   const path = page.src.entry?.path;
   const repo = "https://github.com/eejdoowad/dawoodjee.com";
-  const githubUrl = path && `${repo}/tree/main${path}`;
+  const githubUrl = path && `${repo}/tree/main/src${path}`;
   const createdDateString = created && toDateString(created);
   const updatedDateString = updated && toDateString(updated);
   return (
