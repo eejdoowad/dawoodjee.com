@@ -27,6 +27,7 @@ input, button, textarea, select {
 }
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
+  margin: 2rem 0;
 }
 main {
   min-height: calc(100vh - 200px);
@@ -81,13 +82,6 @@ interface CustomLumeData extends Lume.Data {
   updated?: Date;
 }
 
-function getGithubEditUrl(page: Lume.Page) {
-  const path = page.src.entry?.path;
-  if (!path) return;
-  const githubUrl = "https://github.com/eejdoowad/dawoodjee.com/edit/main";
-  return `${githubUrl}/${path}`;
-}
-
 function toDateString(date: Date): string {
   return date.toISOString().split("T")[0];
 }
@@ -133,7 +127,7 @@ export default (
           {noPills ? null : (
             <div class="pill-container">
               <span class="pill">
-                By Sufyan
+                By Sufyan Dawoodjee
               </span>
               {created && (
                 <span class="pill">
