@@ -75,9 +75,10 @@ h1 {
 `;
 
 interface CustomLumeData extends Lume.Data {
-  noTitle?: true;
-  noPills?: true;
-  opaqueAvatar?: true;
+  isPost: boolean;
+  noTitle: boolean;
+  noPills: boolean;
+  opaqueAvatar: boolean;
   created?: Date;
   updated?: Date;
 }

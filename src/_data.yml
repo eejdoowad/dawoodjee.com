@@ -1,1 +1,6 @@
+# All custom attributes and their default values. 
 layout: layout.tsx
+isPost: false
+noTitle: false
+noPills: false
+opaqueAvatar: false
