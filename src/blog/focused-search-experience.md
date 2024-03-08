@@ -107,8 +107,7 @@ Examples like this show how the quest for monetization has rendered the web
 unusable. Ad blockers exist to defend ourselves from this malpractice.
 
 uBlock Origin is _the_ content blocking web extension. It blocks ads on the
-search results page by default without any additional configuration. This is the
-result.
+search results page by default. This is the result.
 
 ![A search with uBlock Origin shows results, not ads](/img/focused-search-experience/no-ads.avif)
 
