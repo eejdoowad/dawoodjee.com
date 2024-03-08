@@ -2,8 +2,6 @@
 title: Data-Driven Optimizations
 draft: true
 created: 2024-02-20
-tags:
-  - experimentation
 ---
 
 Why you often shouldn't bother and why you end up bothering anyways.

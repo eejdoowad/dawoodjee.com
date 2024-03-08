@@ -2,8 +2,6 @@
 title: Design of Blog Posts
 draft: true
 created: 2024-02-20
-tags:
-  - experimentation
 ---
 
 - What is the intended message? Who is the intended audience?

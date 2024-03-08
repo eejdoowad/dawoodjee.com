@@ -2,8 +2,6 @@
 title: Data-Driven Dumb
 draft: true
 created: 2024-02-20
-tags:
-  - experimentation
 ---
 
 experīmentum perīculōsum

@@ -2,10 +2,6 @@
 title: Thoughts on Tailwind CSS
 draft: true
 created: 2024-02-20
-tags:
-  - ux
-  - css
-  - tailwind
 ---
 
 My first impression of Tailwind CSS was confusion about why people would want to

@@ -1,11 +1,26 @@
 // no-op function to enable syntax highlighting in css block.
 const css = (strings: TemplateStringsArray) => strings.raw[0];
 
+/**
+ * Layout Rules:
+ * - 12px for containment separation
+ * - 20px for larger visual separation
+ * - Normal content width is min(630px, 100vw)
+ * - Elements that benefit from extra space can expand up to 1020px = 630px * golden ratio
+ * - Font color: black
+ * - Background color: white;
+ * - Visually separate background color: #f2f2f2
+ */
+
 /* Adapted from https://www.joshwcomeau.com/css/custom-css-reset/ */
 const styles = css`
 /*! modern-normalize v2.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 *,::after,::before{box-sizing:border-box}html{font-family:system-ui,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji';line-height:1.15;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4}body{margin:0}hr{height:0;color:inherit}abbr[title]{text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}::-moz-focus-inner{border-style:none;padding:0}:-moz-focusring{outline:1px dotted ButtonText}:-moz-ui-invalid{box-shadow:none}legend{padding:0}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}
-a {text-decoration: none;}
+
+/* My style resets */
+a {text-decoration: none}
+input[type="search"]{border-width: 0;width: 100%}
+html {line-height: 1.6}
 
 /* Page layout */
 body {
@@ -13,34 +28,45 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  line-height: 1.6;
-  gap: 20px;
 }
-.home-nav, main, footer {width: min(630px, 100vw);}
-.home-nav {
-  margin-top: 20px;
-  text-align: center;
+body > nav {
+  padding: 20px 12px;
 }
-main {
+body > main {
   flex-grow: 1;
 }
-footer {
+body > footer {
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding: 20px 12px;
-  margin-bottom: 20px;
-  background-color: #f2f2f2;
-  text-align: center;
 }
-@media (max-width: 630px) {
-  footer {
-    margin-bottom: 0
-  }
+body > :is(nav, main, footer) {
+  width: min(630px, 100vw);
 }
 
-/* Markdown generated elements */
-main :is(h1) {
+/* Custom elements */
+.inline-controls {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0px;
+}
+.control {
+  display: inline-block;
+  background-color: #f2f2f2;
+  border-radius: 16px;
+  padding: 0 12px;
+  line-height: 2rem;
+}
+.subtitle {
+  text-align: center;
+  font-style: italic;
+}
+
+/* Markdown elements */
+main h1 {
   text-align: center;
 }
 main :is(img, picture, video, canvas, svg) {
@@ -78,40 +104,6 @@ pre > code {
   max-width: 1020px;
   background-color: #f2f2f2;
   padding: 20px 12px;
-}
-
-/* Custom elements */
-.avatar {
-  display: block;
-  text-align: center;
-  width: 12px; border-radius: 64px;
-  margin: auto;
-  opacity: 0.5;
-  color: white;
-}
-.avatar:hover {
-  opacity: 1;
-}
-.description {
-  text-align: center;
-  font-style: italic;
-}
-.pill-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin: 12px 0px;
-}
-.pill {
-  background-color: #f2f2f2;
-  border-radius: 16px;
-  padding: 4px 8px;
-  font-size: 0.9rem;
-}
-.search-bar {
-  width: 100%;
-  font-size: 1.2em;
 }
 `;
 
@@ -152,7 +144,7 @@ export default (
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
       </head>
       <body>
-        <nav class="home-nav">
+        <nav>
           {kind === "home"
             ? (
               <img
@@ -174,13 +166,13 @@ export default (
             ? (
               <>
                 <h1>{title}</h1>
-                <p class="description">{description}</p>
-                <div class="pill-container">
-                  <span class="pill">
+                <p class="subtitle">{description}</p>
+                <div class="inline-controls">
+                  <span class="control">
                     By Sufyan Dawoodjee
                   </span>
                   {created && (
-                    <span class="pill">
+                    <span class="control">
                       Published{" "}
                       <time datetime={createdDateString}>
                         {createdDateString}
@@ -188,7 +180,7 @@ export default (
                     </span>
                   )}
                   {updated && (
-                    <span class="pill">
+                    <span class="control">
                       Edited{" "}
                       <time datetime={updatedDateString}>
                         {updatedDateString}
@@ -196,16 +188,12 @@ export default (
                     </span>
                   )}
                 </div>
-                <div class="pill-container">
-                  {tags.map((tag) => <span class="pill">{tag}</span>)}
-                </div>
               </>
             )
             : null}
           {children}
         </main>
-        <footer>
-          <a href="/">Home</a>
+        <footer class="">
           <form method="get" action="https://www.google.com/search">
             <input
               name="q"
@@ -216,20 +204,18 @@ export default (
               type="search"
               name="q"
               placeholder="Search"
-              class="search-bar"
+              class="control search-bar"
             />
             <input type="submit" value="Search" hidden />
           </form>
-          <div style="text-align: center">
-            <a href={githubUrl}>
+          <div class="inline-controls">
+            <a class="control" href="/">Home</a>
+            <a class="control" href={githubUrl}>
               Source for this page
             </a>
-            {" • "}
-            <a href="/feed.xml">RSS</a>
-            {" • "}
-            <a href="/feed.json">JSON Feed</a>
+            <a class="control" href="/feed.xml">RSS</a>
+            <a class="control" href="/feed.json">JSON Feed</a>
           </div>
-          <div style="text-align: center">Sufyan Dawoodjee</div>
         </footer>
       </body>
     </html>

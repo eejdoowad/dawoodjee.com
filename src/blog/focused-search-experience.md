@@ -2,8 +2,6 @@
 title: Focused Search Experience
 description: How and why I remove distractions from my search experience
 created: 2024-03-07
-tags:
-  - focus
 ---
 
 Focus is precious. It's a necessary ingredient of usefully invested time, but

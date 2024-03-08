@@ -2,9 +2,6 @@
 title: HTML and CSS Rules of Thumb
 draft: true
 created: 2024-02-20
-tags:
-  - ux
-  - css
 ---
 
 This post defines a core set of practical and opinionated rules for designing

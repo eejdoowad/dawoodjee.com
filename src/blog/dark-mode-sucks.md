@@ -2,8 +2,6 @@
 title: Dark Mode Sucks
 draft: true
 created: 2024-02-20
-tags:
-  - ux
 ---
 
 It's the year 2020. Pandemic hermits spend eye-watering amounts of time staring
@@ -73,8 +71,7 @@ My Dark mode setup
 - VSCode
   - Theme: Dark Modern (Red text on white background in the Light themes is hard
     for me to see, and smart invert makes it impossible to distinguish different
-    highlight colors, so i turn off smart invert, which is okay because there's
-    no bright flash of light)
+    highlight colors, so i turn off smart invert)
 
 - Usage
   - When in low-light conditions, I use my keyboard shortcut to turn on Smart

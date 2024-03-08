@@ -2,8 +2,6 @@
 title: Skepticism about Semantic HTML and Accessibility
 draft: true
 created: 2024-02-20
-tags:
-  - experimentation
 ---
 
 WHo is HTML for? Humans or machines? Are normal humans really capable of writing

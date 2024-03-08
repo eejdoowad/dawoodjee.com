@@ -3,9 +3,6 @@ title: Inductive Deductive
 description: An explanation of the "inductive" and "deductive" with examples
 draft: true
 created: 2024-02-20
-tags:
-  - UX
-  - Dark Patterns
 ---
 
 Huhductive?

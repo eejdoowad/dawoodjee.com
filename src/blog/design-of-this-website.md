@@ -3,10 +3,6 @@ title: Design of this Website
 description: How and why I built this website
 created: 2024-02-20
 updated: 2024-03-07
-tags:
-  - design
-  - programming
-  - blog
 ---
 
 For a while now, I’ve wanted to blog about topics I think are interesting or

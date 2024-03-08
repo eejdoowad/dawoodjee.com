@@ -3,11 +3,6 @@ title: Web Agency
 description: Thoughts on giving people agency over their web browsing experience
 created: 2024-02-23
 updated: 2024-03-07
-tags:
-  - ux
-  - web
-  - design
-  - programming
 ---
 
 Reader mode is a fantastic browser feature because it standardizes how content
