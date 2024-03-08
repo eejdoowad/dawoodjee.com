@@ -8,3 +8,8 @@ tags:
 ---
 
 The problem is...
+
+https://blog.mozilla.org/en/products/firefox/grayscale/
+
+color draw attention and helps with pattern recognition: ads stand out with
+bright colors... so you learn to unciously scroll past bright colors.

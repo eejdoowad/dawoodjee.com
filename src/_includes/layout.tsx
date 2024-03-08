@@ -3,50 +3,98 @@ const css = (strings: TemplateStringsArray) => strings.raw[0];
 
 /* Adapted from https://www.joshwcomeau.com/css/custom-css-reset/ */
 const styles = css`
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-* {
-  margin: 0;
-}
-a {
-  text-decoration: none;
-}
+/*! modern-normalize v2.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
+*,::after,::before{box-sizing:border-box}html{font-family:system-ui,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji';line-height:1.15;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4}body{margin:0}hr{height:0;color:inherit}abbr[title]{text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}::-moz-focus-inner{border-style:none;padding:0}:-moz-focusring{outline:1px dotted ButtonText}:-moz-ui-invalid{box-shadow:none}legend{padding:0}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}
+a {text-decoration: none;}
+
+/* Page layout */
 body {
-  margin: 0;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  font: 18px/1.5 "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  line-height: 1.6;
+  gap: 20px;
 }
-img, picture, video, canvas, svg {
-  display: block;
-  max-width: 100%;
-}
-input, button, textarea, select {
-  font: inherit;
-}
-p, h1, h2, h3, h4, h5, h6 {
-  overflow-wrap: break-word;
-  margin: 2rem 0;
+.home-nav, main, footer {width: min(630px, 100vw);}
+.home-nav {
+  margin-top: 20px;
+  text-align: center;
 }
 main {
-  min-height: calc(100vh - 200px);
+  flex-grow: 1;
 }
 footer {
-  height: 200px;
   display: flex;
-  flex-flow: column;
-  justify-content: center;
+  flex-direction: column;
   gap: 12px;
-  border-top: 1px dashed #aaa;
-}
-.content-area {
-  margin: 0 auto;
-  padding: 20px 10px;
-  max-width: 650px;
-}
-h1 {
+  padding: 20px 12px;
+  margin-bottom: 20px;
+  background-color: #f2f2f2;
   text-align: center;
+}
+@media (max-width: 630px) {
+  footer {
+    margin-bottom: 0
+  }
+}
+
+/* Markdown generated elements */
+main :is(h1) {
+  text-align: center;
+}
+main :is(img, picture, video, canvas, svg) {
+  display: block;
+  max-width: min(100vw, 1020px);
+  margin-left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid #aaa;
+}
+@media (max-width: 1020px) {
+  main :is(img, picture, video, canvas, svg) {
+    border-left: 0px;
+    border-right: 0px;
+  }
+}
+main :is(input, button, textarea, select) {
+  font: inherit;
+}
+main :is(p, h1, h2, h3, h4, h5, h6) {
+  overflow-wrap: break-word;
+  margin: 1.6rem 0;
+  padding: 0 12px;
+}
+main > div > pre {
+  width: min(1020px, 100vw);
+  display: flex;
+  justify-content: center;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+pre > code {
+  display: block;
+  overflow: scroll;
+  min-width: min(630px, 100vw);
+  max-width: 1020px;
+  background-color: #f2f2f2;
+  padding: 20px 12px;
+}
+
+/* Custom elements */
+.avatar {
+  display: block;
+  text-align: center;
+  width: 12px; border-radius: 64px;
+  margin: auto;
+  opacity: 0.5;
+  color: white;
+}
+.avatar:hover {
+  opacity: 1;
+}
+.description {
+  text-align: center;
+  font-style: italic;
 }
 .pill-container {
   display: flex;
@@ -56,29 +104,20 @@ h1 {
   margin: 12px 0px;
 }
 .pill {
-  background-color: #eee;
+  background-color: #f2f2f2;
   border-radius: 16px;
   padding: 4px 8px;
   font-size: 0.9rem;
 }
-.avatar {
-  width: 128px;
-  height: 128px;
-  border-radius: 64px;
-  margin: auto;
-  opacity: 0.5;
-  color: white;
-}
-.avatar:hover {
-  opacity: 1;
+.search-bar {
+  width: 100%;
+  font-size: 1.2em;
 }
 `;
 
 interface CustomLumeData extends Lume.Data {
-  isPost: boolean;
-  noTitle: boolean;
-  noPills: boolean;
-  opaqueAvatar: boolean;
+  kind: "unkown" | "home" | "post";
+  description?: string;
   created?: Date;
   updated?: Date;
 }
@@ -92,14 +131,12 @@ export default (
     title,
     children,
     page,
+    kind,
     tags,
-    noTitle,
-    noPills,
-    opaqueAvatar,
     created,
     updated,
+    description,
   }: CustomLumeData,
-  helpers: Lume.Helpers,
 ) => {
   const path = page.src.entry?.path;
   const repo = "https://github.com/eejdoowad/dawoodjee.com";
@@ -115,53 +152,71 @@ export default (
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
       </head>
       <body>
+        <nav class="home-nav">
+          {kind === "home"
+            ? (
+              <img
+                alt=""
+                src="/cat512.avif"
+                style="width: 128px; border-radius: 64px;"
+              />
+            )
+            : (
+              <a href="/">
+                <div style="text-align: center">
+                  ← Home
+                </div>
+              </a>
+            )}
+        </nav>
         <main class="content-area">
-          <a href="/">
-            <img
-              alt="Home"
-              src="/cat512.avif"
-              class="avatar"
-              style={opaqueAvatar && "opacity: 1"}
-            />
-          </a>
-          {noTitle ? null : <h1>{title}</h1>}
-          {noPills ? null : (
-            <div class="pill-container">
-              <span class="pill">
-                By Sufyan Dawoodjee
-              </span>
-              {created && (
-                <span class="pill">
-                  Published{" "}
-                  <time datetime={createdDateString}>{createdDateString}</time>
-                </span>
-              )}
-              {updated && (
-                <span class="pill">
-                  Edited{" "}
-                  <time datetime={updatedDateString}>{updatedDateString}</time>
-                </span>
-              )}
-            </div>
-          )}
-          <div class="pill-container">
-            {tags.map((tag) => <span class="pill">{tag}</span>)}
-          </div>
+          {kind === "post"
+            ? (
+              <>
+                <h1>{title}</h1>
+                <p class="description">{description}</p>
+                <div class="pill-container">
+                  <span class="pill">
+                    By Sufyan Dawoodjee
+                  </span>
+                  {created && (
+                    <span class="pill">
+                      Published{" "}
+                      <time datetime={createdDateString}>
+                        {createdDateString}
+                      </time>
+                    </span>
+                  )}
+                  {updated && (
+                    <span class="pill">
+                      Edited{" "}
+                      <time datetime={updatedDateString}>
+                        {updatedDateString}
+                      </time>
+                    </span>
+                  )}
+                </div>
+                <div class="pill-container">
+                  {tags.map((tag) => <span class="pill">{tag}</span>)}
+                </div>
+              </>
+            )
+            : null}
           {children}
         </main>
-        <footer class="content-area">
+        <footer>
+          <a href="/">Home</a>
           <form method="get" action="https://www.google.com/search">
             <input
               name="q"
               value="site:dawoodjee.com"
               hidden
-              style="width: 100%"
             />
             <input
               type="search"
               name="q"
               placeholder="Search"
-              style="width: 100%"
+              class="search-bar"
             />
             <input type="submit" value="Search" hidden />
           </form>

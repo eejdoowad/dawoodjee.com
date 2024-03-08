@@ -17,11 +17,11 @@ site
 
 site.use(feed({
   output: ["/feed.xml", "/feed.json"],
-  query: "type=post",
+  query: "kind=post",
   sort: "created=desc",
   limit: 1000,
   info: {
-    title: "Sufyan's Ramblings",
+    title: "Sufyan rambles",
   },
   items: {
     title: "=title",

@@ -1,6 +1,8 @@
 ---
 title: Web Agency
+description: Thoughts on giving people agency over their web browsing experience
 created: 2024-02-23
+updated: 2024-03-07
 tags:
   - ux
   - web
@@ -8,14 +10,11 @@ tags:
   - programming
 ---
 
-_This is a post about giving individuals agency over their web browsing
-experience._
-
 Reader mode is a fantastic browser feature because it standardizes how content
-is displayed across disparate websites, removing distracting clutter and the
-need to learn the bespoke UI of each website. RSS readers take this concept to
-its extreme by automatically providing a standardized feed of content, removing
-the need to navigate custom UIs to find content. Which is great when you know
+is displayed across disparate websites, removing distractions and the need to
+learn each website's bespokoe interface. RSS readers take this concept to its
+extreme by automatically providing a standardized feed of content, removing the
+need to navigate custom UIs to find content. Which is great when you know
 before-hand what content you care about, but doesn't address the need for
 content-on-demand. If you're listening to a song and find yourself interested in
 the history behind it, then you'll need to search for it and navigate the web to

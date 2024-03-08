@@ -1,7 +1,5 @@
 export const title = "dawoodjee.com";
-export const noTitle = true;
-export const noPills = true;
-export const opaqueAvatar = true;
+export const kind = "home";
 
 function toDateString(date: Date): string {
   return date.toISOString().split("T")[0];
@@ -28,20 +26,22 @@ export default ({ search }: Lume.Data) => {
           </a>
         </div>
       </p>
-      <ul>
-        {search.pages().filter((page) => page.isPost).sort((a, b) =>
-          b.created - a.created
-        ).map((page) => (
-          <li>
-            <span class="pill">
-              {toDateString(page.created)}
-            </span>{" "}
-            <a href={page.url}>
-              {page.title}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <nav>
+        <ul>
+          {search.pages().filter((page) => page.kind === "post").sort((a, b) =>
+            b.created - a.created
+          ).map((page) => (
+            <li>
+              <span class="pill">
+                {toDateString(page.created)}
+              </span>{" "}
+              <a href={page.url}>
+                {page.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </>
   );
 };
