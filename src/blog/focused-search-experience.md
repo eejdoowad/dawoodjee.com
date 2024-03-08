@@ -1,10 +1,9 @@
 ---
-
-title: Focused Search Experience description: How and why I remove distractions
-from my search experience created: 2024-03-07 tags:
-
-- focus
-
+title: Focused Search Experience
+description: How and why I remove distractions from my search experience
+created: 2024-03-07
+tags:
+  - focus
 ---
 
 Focus is precious. It's a necessary ingredient of usefully invested time, but
@@ -19,8 +18,6 @@ in my search experience because my useful work involves lots of searching.
 This is my search experience:
 
 <video controls src="/img/focused-search-experience/preview.webm" ></video>
-
-<!-- ![Search UX without distractions](/img/focused-search-experience/preview.webm) -->
 
 And this is how it works:
 
