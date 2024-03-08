@@ -9,9 +9,9 @@ tags:
   - blog
 ---
 
-For a while now, I’ve wanted to create a blog to write about topics I think are
-interesting or might be useful to others. This post explains why and how I built
-this website.
+For a while now, I’ve wanted to blog about topics I think are interesting or
+might be useful to others. This post explains why I needed a website and how I
+built it.
 
 ## Why not Social Media or Hosted CMSs
 

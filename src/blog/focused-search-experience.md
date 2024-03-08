@@ -1,9 +1,10 @@
 ---
-title: Focused Search Experience
-description: How and why I remove distractions from my search experience
-created: 2024-03-07
-tags:
-  - focus
+
+title: Focused Search Experience description: How and why I remove distractions
+from my search experience created: 2024-03-07 tags:
+
+- focus
+
 ---
 
 Focus is precious. It's a necessary ingredient of usefully invested time, but
@@ -121,8 +122,8 @@ Much better! But it can be refined further:
 - The blue search button is useless to me because I always submit my searches
   using the "Enter" key.
 - The "x" button is useless to me because I never clear the search query.
-- The "About X results (Y seconds)" notice is useless to me. I dont't care
-  unless something went wrong.
+- The "About X results (Y seconds)" notice is useless to me. I don't care unless
+  something went wrong.
 - The "Sort by relevance/recency" toggle is useless because the recency sort is
   useless. What I really want is a time range filter.
 - There's additional Google branding at the bottom of the page I don't care
@@ -164,7 +165,7 @@ I lied. The default suggestions UI is terrible for the usual reason,
 monetization. I actually don't want any suggestions.
 
 - History suggestions are likely to reinforce bad habits as they guide me back
-  toward irresistable, mindless entertainment.
+  toward irresistible, mindless entertainment.
 - On the infrequent occasion when I need it, dedicated bookmark search works
   great.
 - Searching for tabs means I have too many tabs open and can't keep track of

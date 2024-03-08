@@ -30,4 +30,15 @@ Image Processing
 
 ## Videos
 
-TODO
+Recording Screencasts
+
+1. Type `cmd + shift + 5` to open Screenshots
+2. Create a recording
+
+Video Processing
+
+1. Import the `.mov` into iMovie
+2. Trim the video
+3. Export to `.mp4` using `File -> Share -> File`
+4. Convert `.mp4` to `.webm` using https://www.freeconvert.com/mp4-to-webm
+5. Save to `/static/img/{blog-post-path}/{video-name}.webm`
