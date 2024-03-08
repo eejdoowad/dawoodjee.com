@@ -8,6 +8,11 @@ function toDateString(date: Date): string {
 export default ({ search }: Lume.Data) => {
   return (
     <>
+      <img
+        alt=""
+        src="/cat512.avif"
+        style="width: 128px; height: 128px; border-radius: 64px;"
+      />
       <p class="subtitle">
         Sufyan programs and dabbles
       </p>

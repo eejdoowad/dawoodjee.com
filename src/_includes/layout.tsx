@@ -19,7 +19,7 @@ const styles = css`
 
 /* My style resets */
 a {text-decoration: none}
-input[type="search"]{border-width: 0;width: 100%}
+input[type="search"]{border-width: 0; width: 100%}
 html {line-height: 1.6}
 
 /* Page layout */
@@ -54,11 +54,14 @@ body > :is(nav, main, footer) {
   margin: 12px 0px;
 }
 .control {
-  display: inline-block;
+  display: block;
   background-color: #f2f2f2;
   border-radius: 16px;
   padding: 0 12px;
   line-height: 2rem;
+}
+.grow {
+  flex-grow: 1;
 }
 .subtitle {
   text-align: center;
@@ -108,7 +111,7 @@ pre > code {
 `;
 
 interface CustomLumeData extends Lume.Data {
-  kind: "unkown" | "home" | "post";
+  kind: "unkown" | "error" | "home" | "post";
   description?: string;
   created?: Date;
   updated?: Date;
@@ -124,7 +127,6 @@ export default (
     children,
     page,
     kind,
-    tags,
     created,
     updated,
     description,
@@ -144,22 +146,32 @@ export default (
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
       </head>
       <body>
-        <nav>
-          {kind === "home"
+        <nav class="inline-controls">
+          {kind !== "home"
             ? (
-              <img
-                alt=""
-                src="/cat512.avif"
-                style="width: 128px; border-radius: 64px;"
-              />
-            )
-            : (
-              <a href="/">
-                <div style="text-align: center">
-                  ← Home
-                </div>
+              <a class="control" href="/">
+                Home
               </a>
-            )}
+            )
+            : null}
+          <form
+            class="grow"
+            method="get"
+            action="https://www.google.com/search"
+          >
+            <input
+              name="q"
+              value="site:dawoodjee.com"
+              hidden
+            />
+            <input
+              type="search"
+              name="q"
+              placeholder="Search"
+              class="control"
+            />
+            <input type="submit" value="Search" hidden />
+          </form>
         </nav>
         <main class="content-area">
           {kind === "post"
@@ -194,25 +206,8 @@ export default (
           {children}
         </main>
         <footer class="">
-          <form method="get" action="https://www.google.com/search">
-            <input
-              name="q"
-              value="site:dawoodjee.com"
-              hidden
-            />
-            <input
-              type="search"
-              name="q"
-              placeholder="Search"
-              class="control search-bar"
-            />
-            <input type="submit" value="Search" hidden />
-          </form>
           <div class="inline-controls">
-            <a class="control" href="/">Home</a>
-            <a class="control" href={githubUrl}>
-              Source for this page
-            </a>
+            <a class="control" href={githubUrl}>Edit this page</a>
             <a class="control" href="/feed.xml">RSS</a>
             <a class="control" href="/feed.json">JSON Feed</a>
           </div>
