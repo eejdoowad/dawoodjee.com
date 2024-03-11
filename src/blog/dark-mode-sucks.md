@@ -79,3 +79,7 @@ My Dark mode setup
   - When in VSCode, if Smart Invert is on, I use my keyboard shortcut to turn it
     off
   - Everything else is done in my default (light appearance) settings
+
+- Main problems
+  - Images are inverted and this can ruin photographs, so I have to reset
+  - Contrast of dark colors can still be too low

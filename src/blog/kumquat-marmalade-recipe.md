@@ -30,15 +30,15 @@ created: 2024-03-10
 1. Periodically mix with silicon spatula
 1. Take it out when it's ready (watch a video)
 1. Pour hot mixture into sanitized jars and seal
-1. Allow jars to sit until cooled to room tempature
-1. Refigerate and eat
+1. Allow jars to sit until cooled to room temperature
+1. Refrigerate and eat
 
 ## Notes
 
 - All quantities are guesstimates
 - 1-to-1 is the standard mixture to sugar ratio, but we like it less sweet
 - Granulated sugar also works, but we prefer cane sugar
-- Make sure to santize jars before use
-- 8oz mason jars are the right size
-- In the future, we'll experiment with spices like saffron, cardamon, star
-  anise, and cinammon
+- Make sure to sanitize jars before use
+- 8 oz mason jars are the right size
+- In the future, we'll experiment with spices like saffron, cardamom, star
+  anise, and cinnamon
