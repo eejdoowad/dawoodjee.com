@@ -38,7 +38,7 @@ created: 2024-03-10
 - All quantities are guesstimates
 - 1-to-1 is the standard mixture to sugar ratio, but we like it less sweet
 - Granulated sugar also works, but we prefer cane sugar
-- Sanitizing
+- Make sure to santize jars before use
 - 8oz mason jars are the right size
 - In the future, we'll experiment with spices like saffron, cardamon, star
   anise, and cinammon
