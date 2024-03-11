@@ -2,6 +2,7 @@
 title: Focused Search Experience
 description: How and why I remove distractions from my search experience
 created: 2024-03-07
+updated: 2024-03-10
 ---
 
 Focus is precious. It's a necessary ingredient of usefully invested time, but
@@ -153,7 +154,7 @@ I start by typing `cmd + L` to select Firefox's search bar and begin typing my
 query. Helpful suggestions appear to save me keystrokes and send me where I want
 to go.
 
-![Search dialog with lots of annoying suggestions](/img/focused-search-experience/suggestions.avif)
+![Search dialog with lots of annoying suggestions](/img/focused-search-experience/suggestions.avif#small)
 
 I lied. The default suggestions UI is terrible for the usual reason,
 monetization. I actually don't want any suggestions.
@@ -174,7 +175,7 @@ Firefox makes it somewhat tedious, but I was able to disable all suggestions. In
 the process, I also set the default search engine to my custom search engine and
 switched to a light browser theme.
 
-![Search dialog with lots of annoying suggestions](/img/focused-search-experience/no-suggestions.avif)
+![Search dialog with lots of annoying suggestions](/img/focused-search-experience/no-suggestions.avif#small)
 
 ## What's next?
 

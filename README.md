@@ -28,6 +28,18 @@ Image Processing
 1. Convert to `.avif` using https://squoosh.app
 2. Save to `/static/img/{blog-post-path}/{image-name}.avif`
 
+Referencing in Markdown
+
+```md
+Expands beyond text width by default
+
+![Image description](/img/example-post/example-image.avif`)
+
+Add #small suffix to not exceed text width
+
+![Image description](/img/example-post/example-image.avif#small`)
+```
+
 ## Videos
 
 Recording Screencasts

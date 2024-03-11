@@ -85,6 +85,9 @@ main :is(img, picture, video, canvas, svg) {
     border-right: 0px;
   }
 }
+main :is(img, picture, video, canvas, svg)[src$="#small"] {
+  max-width: min(100vw, 630px) !important;
+}
 main :is(input, button, textarea, select) {
   font: inherit;
 }
