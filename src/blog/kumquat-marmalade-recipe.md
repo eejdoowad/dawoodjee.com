@@ -16,7 +16,7 @@ created: 2024-03-10
 
 ## Steps
 
-1. Wash kumquats and remove and blemishes
+1. Wash kumquats remove and blemishes
 1. Slice kumquats into ~3-5mm circular cross sections into dish
 1. Zest lemon into dish
 1. Extract lemon pulp into chunks and remove rind, then add to dish
