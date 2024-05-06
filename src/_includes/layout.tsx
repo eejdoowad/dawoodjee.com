@@ -111,6 +111,9 @@ pre > code {
   background-color: #f2f2f2;
   padding: 20px 12px;
 }
+p > code {
+  color: #7131ff;
+}
 `;
 
 interface CustomLumeData extends Lume.Data {
