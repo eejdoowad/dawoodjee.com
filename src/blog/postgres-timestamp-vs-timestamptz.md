@@ -81,9 +81,9 @@ select extract(epoch from timestamp '2004-10-19 10:23:54')
 -- If you go digging, you'll find 8 byte integer 0x000089C90F0DE280 in memory.
 ```
 
-Even though `timestamp` values are stored as offsets from UTC, they should not
-be interpreted as timestamps in the UTC time zone. Refer to the
-[definition of timestamp](#definition).
+Even though `timestamp` values are stored as offsets relative to the dawn of the
+millennium in UTC time, they should not be interpreted as timestamps in the UTC
+time zone. Refer to the [definition of timestamp](#definition).
 
 Note that `timestamptz` does _not_ store the time zone. The time zone used to
 create a `timestamptz` value cannot be recovered.
