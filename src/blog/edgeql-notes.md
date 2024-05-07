@@ -24,3 +24,4 @@ Interesting design choices
 - Path expressions like a.b.c are graph traversals that return all reachable
   elements, which is a distinct set by definition; and this definition allows
   for an efficient semi-join implementaiton
+- Group by
