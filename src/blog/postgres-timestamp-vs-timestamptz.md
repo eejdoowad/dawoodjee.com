@@ -78,7 +78,7 @@ select extract(epoch from timestamp '2004-10-19 10:23:54')
 -- Returns 151496634
 
 -- 151496634 seconds = 151496634000000 microseconds = 0x000089C90F0DE280 microseconds
--- If you go digging, you'll find 8 byte integer 0x000089C90F0DE280 in memory.
+-- If you go digging, you'll find 64-bit integer 0x000089C90F0DE280 in memory.
 ```
 
 Even though `timestamp` values are stored as offsets relative to the dawn of the
