@@ -3,6 +3,8 @@ import jsx from "lume/plugins/jsx_preact.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import feed from "lume/plugins/feed.ts";
 import title from "lume_markdown_plugins/title.ts";
+import codeHighlight from "lume/plugins/code_highlight.ts";
+import sqlLang from "npm:highlight.js/lib/languages/sql";
 
 const site = lume({
   src: "./src",
@@ -13,7 +15,12 @@ site
   .use(jsx())
   .copy("static", ".")
   .use(sitemap(/* Options */))
-  .use(title());
+  .use(title())
+  .use(codeHighlight({
+    languages: {
+      sql: sqlLang,
+    },
+  }));
 
 site.use(feed({
   output: ["/feed.xml", "/feed.json"],
