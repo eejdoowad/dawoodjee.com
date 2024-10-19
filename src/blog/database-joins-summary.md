@@ -7,27 +7,43 @@ created: 2024-05-01
 
 ## Overview
 
-Joins combine two input sets into an output set based on some condition.
+SQL joins combine two input relations into an output relation based on a
+specified condition.
 
-`O = Join(L, R) = L ⋈ R`
+| join type                                  | symbol | associative | commutative | min ∣O∣   | max ∣O∣   | SQL syntax | equivalent to         | notes                       |
+| ------------------------------------------ | ------ | ----------- | ----------- | --------- | --------- | ---------- | --------------------- | --------------------------- |
+| cross join                                 | X      | yes         | yes         | ∣L∣ * ∣R∣ | ∣L∣ * ∣R∣ | X          |                       |                             |
+| inner join                                 | X      | yes         | yes         | 0         | ∣L∣ * ∣R∣ | X          | filter ∘ cross_join   |                             |
+| left join                                  | X      | yes         | no          | ∣L∣       | ∣L∣ * ∣R∣ | X          |                       |                             |
+| right join                                 | X      | yes         | no          | ∣R∣       | ∣L∣ * ∣R∣ | X          | left_join(R, L)       |                             |
+| -                                          | -      | -           | -           | -         | -         | -          |                       |                             |
+| semi join                                  | X      | -           | no          | 0         | ∣L∣       | X          |                       |                             |
+| anti join                                  | X      | -           | no          | 0         | ∣L∣       | X          |                       |                             |
+| -                                          | -      | -           | -           | -         | -         | -          |                       |                             |
+| correlated subquery in select              | X      | -           | -           | ∣L∣       | ∣L∣       | X          | left join             | subquery must return scalar |
+| correlated subquery in where               | X      | -           | -           | 0         | ∣L∣       | X          | maybe semi/anti-join? |                             |
+| correlated subquery in from (lateral join) | X      | -           | -           | 0         | ∣L∣ * ∣R∣ | X          |                       |                             |
+| -                                          | -      | -           | -           | -         | -         | -          |                       |                             |
+| union all                                  | X      | -           | yes         | ∣L∣ + ∣R∣ | ∣L∣ + ∣R∣ | X          |                       |                             |
+| union distinct                             | X      | -           | yes         |           | ∣L∣ + ∣R∣ | X          | D ∘ union_all         |                             |
+| intersect all                              | X      | -           | no          | -         | ∣L∣       | X          |                       |                             |
+| intersect distinct                         | X      | -           | yes         | -         | ∣L∣       | X          | D ∘ intersect_all     |                             |
+| except all                                 | X      | -           | -           | -         | -         | X          |                       |                             |
+| except distinct                            | X      | -           | -           | -         | -         | X          | D ∘ except_all        |                             |
 
-| type                                       | symbol | SQL syntax | associative | commutative | equivalent to                  | min output size | max output size |
-| ------------------------------------------ | ------ | ---------- | ----------- | ----------- | ------------------------------ | --------------- | --------------- |
-| cross join                                 | X      | X          | yes         | yes         |                                | ∣L∣ * ∣R∣       | ∣L∣ * ∣R∣       |
-| inner join                                 | X      | X          | yes         | yes         | cross join + filter            | 0               | ∣L∣ * ∣R∣       |
-| left join                                  | X      | X          | yes         | no          |                                | ∣L∣             | ∣L∣ * ∣R∣       |
-| right join                                 | X      | X          | yes         | no          | left join with reversed inputs | ∣R∣             | ∣L∣ * ∣R∣       |
-| semi join                                  | X      | X          | -           | no          |                                | 0               | ∣L∣             |
-| anti join                                  | X      | X          | -           | no          |                                | 0               | ∣L∣             |
-| -                                          | -      | -          | -           | -           |                                | -               | -               |
-| correlated subquery in select              | X      | X          | -           | -           | special case of left join      | ∣L∣             | ∣L∣             |
-| correlated subquery in where               | X      | X          | -           | -           | maybe semi/anti-join?          | 0               | ∣L∣             |
-| correlated subquery in from (lateral join) | X      | X          | -           | -           | special case of lateral join   | 0               | ∣L∣ * ∣R∣       |
-| -                                          | -      | -          | -           | -           |                                | -               | -               |
-| natural join                               | X      | X          | -           | -           |                                | -               | -               |
-| union                                      | X      | X          | -           | -           |                                | -               | -               |
-| intersection                               | X      | X          | -           | -           |                                | -               | -               |
-| difference                                 | X      | X          | -           | -           |                                | -               | -               |
+| condition type | symbol | SQL syntax | equivalent to | notes                                             |
+| -------------- | ------ | ---------- | ------------- | ------------------------------------------------- |
+| natural join   | X      | X          |               |                                                   |
+| equi join      | X      | X          |               |                                                   |
+| theta join     | X      | X          |               | hard to optimize, implemented as slow cross joins |
+
+- `O = Join(L, R) = L ⋈ R`
+- ∣I∣ is the total number of elements in relation I
+- Distinct: D(I) removes duplicate elements from relation I to return a distinct
+  set
+- Function Composition: f ∘ g (I) = f(g(I))
+- Commutative: a ⋅ b = b ⋅ a
+- Associative: (a ⋅ b) ⋅ c = a ⋅ (b ⋅ c)
 
 ## Example Data
 
