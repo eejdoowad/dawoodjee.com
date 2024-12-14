@@ -162,10 +162,9 @@ because it _always_ chooses to recurse until the input is exhausted.
 The key idea behind Pratt parsing is to use nested levels of recursion to
 represent nested expressions of increasing precedence.
 
-By definition, a level exits upon encountering an operator with lower precedence
-than the level's.
+By definition, a level exits an operator with lower precedence appears.
 
-A level's precedence is defined by the parent level's operator. The root
+The parent expression's operator determines a level's precedence. The root
 expression has no parent; this means minimum precedence.
 
 ```ts
