@@ -26,18 +26,18 @@ Firefox Screenshots
 Image Processing
 
 1. Convert to `.avif` using https://squoosh.app
-2. Save to `/static/img/{blog-post-path}/{image-name}.avif`
+2. Save to `/static/assets/{blog-post-path}/{image-name}.avif`
 
 Referencing in Markdown
 
 ```md
 Expands beyond text width by default
 
-![Image description](/img/example-post/example-image.avif`)
+![Image description](/assets/example-post/example-image.avif`)
 
 Add #small suffix to not exceed text width
 
-![Image description](/img/example-post/example-image.avif#small`)
+![Image description](/assets/example-post/example-image.avif#small`)
 ```
 
 ## Videos
@@ -53,4 +53,4 @@ Video Processing
 2. Trim the video
 3. Export to `.mp4` using `File -> Share -> File`
 4. Convert `.mp4` to `.webm` using https://www.freeconvert.com/mp4-to-webm
-5. Save to `/static/img/{blog-post-path}/{video-name}.webm`
+5. Save to `/static/assets/{blog-post-path}/{video-name}.webm`

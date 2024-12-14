@@ -16,7 +16,7 @@ in my search experience because my useful work involves lots of searching.
 
 This is my search experience:
 
-<video controls src="/img/focused-search-experience/preview.webm" ></video>
+<video controls src="/assets/focused-search-experience/preview.webm" ></video>
 
 And this is how it works:
 
@@ -102,7 +102,7 @@ The user experience of Google Programmable Search Engine is terrible because ads
 use up the entire viewport on the results page, forcing users to scroll down to
 see any results.
 
-![A search shows nothing but ads](/img/focused-search-experience/ads.avif)
+![A search shows nothing but ads](/assets/focused-search-experience/ads.avif)
 
 Examples like this show how the quest for monetization has rendered the web
 unusable. Ad blockers exist to defend ourselves from this malpractice.
@@ -110,7 +110,7 @@ unusable. Ad blockers exist to defend ourselves from this malpractice.
 uBlock Origin is _the_ content blocking web extension. It blocks ads on the
 search results page by default. This is the result.
 
-![A search with uBlock Origin shows results, not ads](/img/focused-search-experience/no-ads.avif)
+![A search with uBlock Origin shows results, not ads](/assets/focused-search-experience/no-ads.avif)
 
 Much better! But it can be refined further:
 
@@ -128,7 +128,7 @@ Much better! But it can be refined further:
 
 This is the result:
 
-![Search UX without distractions](/img/focused-search-experience/preview.avif)
+![Search UX without distractions](/assets/focused-search-experience/preview.avif)
 
 And these are the underlying uBlock Origin filters:
 
@@ -141,7 +141,7 @@ cse.google.com##.gsc-adBlock,#cse-footer,.gcsc-find-more-on-google-branding
 
 Unfortunately, there's no way to get around the reCAPTCHA.
 
-![I hate reCAPTCHA](/img/focused-search-experience/recaptcha.avif)
+![I hate reCAPTCHA](/assets/focused-search-experience/recaptcha.avif)
 
 ## Firefox
 
@@ -154,7 +154,7 @@ I start by typing `cmd + L` to select Firefox's search bar and begin typing my
 query. Helpful suggestions appear to save me keystrokes and send me where I want
 to go.
 
-![Search dialog with lots of annoying suggestions](/img/focused-search-experience/suggestions.avif#small)
+![Search dialog with lots of annoying suggestions](/assets/focused-search-experience/suggestions.avif#small)
 
 I lied. The default suggestions UI is terrible for the usual reason,
 monetization. I actually don't want any suggestions.
@@ -175,7 +175,7 @@ Firefox makes it somewhat tedious, but I was able to disable all suggestions. In
 the process, I also set the default search engine to my custom search engine and
 switched to a light browser theme.
 
-![Search dialog with lots of annoying suggestions](/img/focused-search-experience/no-suggestions.avif#small)
+![Search dialog with lots of annoying suggestions](/assets/focused-search-experience/no-suggestions.avif#small)
 
 ## What's next?
 

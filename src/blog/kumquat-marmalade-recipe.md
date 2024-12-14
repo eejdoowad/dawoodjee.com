@@ -4,7 +4,7 @@ description: Yummy with toast and butter
 created: 2024-03-10
 ---
 
-![Jars of marmalade](/img/kumquat-marmalade-recipe/jars-of-marmalade.avif#small)
+![Jars of marmalade](/assets/kumquat-marmalade-recipe/jars-of-marmalade.avif#small)
 
 ## Ingredients
 
