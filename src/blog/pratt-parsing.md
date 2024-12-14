@@ -7,7 +7,7 @@ created: 2024-12-14
 Hundreds of Pratt parsing posts exist. I hope this one is relatively clear,
 concise, and comprehensive.
 
-We'll learn how Pratt parsers work by writing one. I assume familiarity with
+Learn how Pratt parsers work by writing one. I assume familiarity with
 [grammars, parsers](https://web.archive.org/web/20240413191133/https://web.mit.edu/6.102/www/sp24/classes/12-grammars-parsing/)
 and TypeScript.
 
