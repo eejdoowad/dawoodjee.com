@@ -797,11 +797,8 @@ function expr_tail(ctx, parent_op, left_expr) {
 }
 ```
 
-This requires every operator to be (left or right) associative and have global
-precedence.
-
 Personally, I find binding power less intuitive than the equivalent precedence
-and associativity checks:
+and associativity checks.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
@@ -815,3 +812,26 @@ function expr_tail(ctx, parent_op, left_expr) {
     return left_expr;
 }
 ```
+
+I also think requiring parentheses on expressions that are ambiguous _to humans_
+is good language design.
+
+```ts
+function expr_tail(ctx, parent_op, left_expr) {
+    while (has_token(ctx)) {
+        // ...
+        const order = cmp_precedence(op, parent_op);
+        if (order === "!") throw error_unrelated_ops(op, parent_op);
+        if (order === "<") break;
+        if (order === "=") {
+            if (assoc(op) === "left") break;
+            if (assoc(op) === "none") throw error_assoc(op);
+        }
+        // ...
+    }
+    return left_expr;
+}
+```
+
+Unfortunately, binding power requires every operator to have global precedence
+and infix operators to be (left or right) associative.
