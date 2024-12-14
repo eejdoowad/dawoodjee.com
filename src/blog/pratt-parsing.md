@@ -164,8 +164,8 @@ represent nested expressions of increasing precedence.
 
 By definition, a level exits an operator with lower precedence appears.
 
-The parent expression's operator determines a level's precedence. The root
-expression has no parent; this means minimum precedence.
+The parent operator determines a level's precedence. The root expression has no
+parent; this means minimum precedence.
 
 ```ts
 // Compares the precedence of two operators
