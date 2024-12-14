@@ -165,7 +165,7 @@ represent nested expressions of increasing precedence.
 By definition, a level exits an operator with lower precedence appears.
 
 The parent operator determines a level's precedence. The root expression has no
-parent; this means minimum precedence.
+parent, which means minimum precedence.
 
 ```ts
 // Compares the precedence of two operators
@@ -799,3 +799,19 @@ function expr_tail(ctx, parent_op, left_expr) {
 
 This requires every operator to be (left or right) associative and have global
 precedence.
+
+Personally, I find binding power less intuitive than the equivalent precedence
+and associativity checks:
+
+```ts
+function expr_tail(ctx, parent_op, left_expr) {
+    while (has_token(ctx)) {
+        // ...
+        const order = cmp_precedence(op, parent_op);
+        if (order === "<") break;
+        if (order === "=" && assoc(op) === "left") break;
+        // ...
+    }
+    return left_expr;
+}
+```
