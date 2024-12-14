@@ -635,7 +635,7 @@ for (const group of groups) {
 `assoc()` is a map lookup.
 
 ```ts
-function assoc(op: Op): "left" | "right" | "none" {
+function assoc(op) {
     return map_op_to_assoc.get(op)!;
 }
 ```
