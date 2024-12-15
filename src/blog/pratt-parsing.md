@@ -321,7 +321,7 @@ expression, so precedence is reset.
 function expr_head(ctx) {
     const token = next_token(ctx);
     if (token === "(") {
-        const right_expr = expr(ctx, null);
+        const right_expr = expr(ctx, Op.Root);
         next_token(ctx); // consume ")"
         return right_expr;
     } else if (is_number_token(token)) {
@@ -385,7 +385,7 @@ function expr_tail(ctx, parent_op, left_expr) {
         if (order === "=" && assoc(op) === "left") break;
         next_token(ctx);
         if (op === Op.Subscript) {
-            const middle_expr = expr(ctx, null);
+            const middle_expr = expr(ctx, Op.Root);
             next_token(ctx); // consume "]"
             left_expr = subscript(left_expr, middle_expr);
         } else if (is_postfix_op(op)) {
@@ -429,12 +429,12 @@ function expr_tail(ctx, parent_op, left_expr) {
         if (order === "=" && assoc(op) === "left") break;
         next_token(ctx);
         if (op === Op.Ternary) {
-            const middle_expr = expr(ctx, null);
+            const middle_expr = expr(ctx, Op.Root);
             next_token(ctx); // consume ":"
             const right_expr = expr(ctx, op);
             left_expr = ternary(left_expr, middle_expr, right_expr);
         } else if (op === Op.Subscript) {
-            const middle_expr = expr(ctx, null);
+            const middle_expr = expr(ctx, Op.Root);
             next_token(ctx); // consume "]"
             left_expr = subscript(left_expr, middle_expr);
         } else if (is_postfix_op(op)) {
@@ -464,7 +464,7 @@ function expr_tail(ctx, parent_op, left_expr) {
     while (has_token(ctx)) {
         // ...
         if (op === Op.Ternary) {
-            const middle_expr = expr(ctx, null);
+            const middle_expr = expr(ctx, Op.Root);
             let right_expr = null;
             if (peek_token(ctx) === ":") {
                 next_token(ctx); // consume ":"
