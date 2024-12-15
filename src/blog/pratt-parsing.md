@@ -372,7 +372,7 @@ expr_tail = infix_op expr
 subscript_op = "[" expr "]"
 ```
 
-Like `)` tokens, `]` tokens end an expression.
+Like `)` tokens, `]` tokens end expressions.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
@@ -416,7 +416,7 @@ expr_tail = infix_op expr
 ternary_op = "?" expr ":" expr
 ```
 
-`:` tokens mark the end of an expression.
+`:` tokens end expressions.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
