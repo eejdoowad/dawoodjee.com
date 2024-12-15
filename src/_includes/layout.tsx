@@ -118,7 +118,9 @@ code {
   background-color: #f2f2f2;
 }
 table {
-  min-width: min(630px, 100vw);
+  display: block;
+  width: min(630px, 100vw);
+  overflow: scroll;
   border-collapse: collapse;
   text-align: left;
 }
