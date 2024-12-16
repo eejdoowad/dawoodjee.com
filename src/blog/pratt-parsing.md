@@ -582,13 +582,15 @@ relative precedence.
 | Disjunction      | \|\|            | left          | Ternary                      |
 | Ternary          | ?:              | none          |                              |
 
-Precedence groups form a digraph. Note how BitwiseShift lacks an ordering
-relative to Exponentiation, Multiplication, and Addition.
-
 Given precedence `P`, `P(Multiplication) > P(Comparison)` because precedence is
 transitive: `P(A) > P(B)` and `P(B) > P(C)` imply `P(A) > P(C)`.
 
-Encode the table data in TypeScript.
+Precedence groups form a digraph. Note how BitwiseShift lacks an ordering
+relative to Exponentiation, Multiplication, and Addition.
+
+### Implementation
+
+Encode the precedence table in TypeScript.
 
 ```ts
 const enum Op {
@@ -625,8 +627,6 @@ const groups = [
     // ... remaining groups
 ];
 ```
-
-### Implementing assoc() and cmp_precedence()
 
 Precompute mappings from operators to groups and associativities.
 
@@ -672,7 +672,7 @@ for (const [_, dsts] of precedence_gt) {
 }
 ```
 
-`cmp_precedence()` follows.
+`cmp_precedence()` refers to the map.
 
 ```ts
 function cmp_precedence(op1, op2) {
