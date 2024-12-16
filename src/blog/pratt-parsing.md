@@ -732,7 +732,7 @@ function expr_tail(ctx, parent_op, left_expr) {
         } else if (op === Op.Subscript) {
             const middle_expr = expr(ctx, Op.Root);
             const rbracket = next_token(ctx);
-            if (rbracket !== "]") throw error_bad_token(rbracket, "]");
+            if (rbracket !== "]") throw error_bad_token(rbracket);
             left_expr = subscript(left_expr, middle_expr);
         } else if (is_postfix_op(op)) {
             left_expr = postfix(op, left_expr);
