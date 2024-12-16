@@ -3,6 +3,7 @@ import jsx from "lume/plugins/jsx_preact.ts";
 import sitemap from "lume/plugins/sitemap.ts";
 import feed from "lume/plugins/feed.ts";
 import title from "lume_markdown_plugins/title.ts";
+import toc from "lume_markdown_plugins/toc.ts";
 import codeHighlight from "lume/plugins/code_highlight.ts";
 import sqlLang from "npm:highlight.js/lib/languages/sql";
 
@@ -16,6 +17,7 @@ site
   .copy("static", ".")
   .use(sitemap(/* Options */))
   .use(title())
+  .use(toc())
   .use(codeHighlight({
     languages: {
       sql: sqlLang,

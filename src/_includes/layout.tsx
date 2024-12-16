@@ -1,3 +1,5 @@
+import { Node } from "lume_markdown_plugins/toc/mod.ts";
+
 // no-op function to enable syntax highlighting in css block.
 const css = (strings: TemplateStringsArray) => strings.raw[0];
 
@@ -95,7 +97,7 @@ main :is(img, picture, video, canvas, svg)[src$="#small"] {
 main :is(input, button, textarea, select) {
   font: inherit;
 }
-main :is(p, h1, h2, h3, h4, h5, h6) {
+main :is(p, h1, h2, h3, h4, h5, h6, details) {
   overflow-wrap: break-word;
   margin: 1.6rem 0;
   padding: 0 12px;
@@ -128,6 +130,19 @@ th, td {
   padding: 0 12px;
   border: 1px solid #aaa;
 }
+.toc li {
+  display: inline;
+}
+details > .toc {
+  padding-left: 0;
+}
+summary {
+  text-align: center;
+  font-weight: bold;
+}
+summary:hover {
+  cursor: pointer;
+}
 `;
 
 interface CustomLumeData extends Lume.Data {
@@ -135,10 +150,50 @@ interface CustomLumeData extends Lume.Data {
   description?: string;
   created?: Date;
   updated?: Date;
+  show_toc?: boolean;
+  toc: Node[];
 }
 
 function toDateString(date: Date): string {
   return date.toISOString().split("T")[0];
+}
+
+function TableOfContents({ title, toc }: { title?: string; toc: Node[] }) {
+  const nextSectionIndex = toc.findIndex((node) => node.level === 2);
+  const patchedToc: Node[] = [
+    {
+      text: title ?? "Table of Contents",
+      slug: "table-of-contents",
+      level: 2,
+      url: "#",
+      children: toc.slice(0, nextSectionIndex),
+    },
+    ...toc.slice(nextSectionIndex),
+  ];
+  return (
+    <>
+      <details>
+        <summary>Table of Contents</summary>
+        <TableOfContentsList toc={patchedToc} />
+      </details>
+    </>
+  );
+}
+
+function TableOfContentsList({ toc }: { toc: Node[] }) {
+  return (
+    <ul class="toc">
+      {toc.map((node) => <TableOfContentsItem node={node} />)}
+    </ul>
+  );
+}
+function TableOfContentsItem({ node }: { node: Node }) {
+  return (
+    <li>
+      <a href={node.url}>{node.text}</a>
+      {node.children && <TableOfContentsList toc={node.children} />}
+    </li>
+  );
 }
 
 export default (
@@ -150,6 +205,8 @@ export default (
     created,
     updated,
     description,
+    toc,
+    show_toc,
   }: CustomLumeData,
 ) => {
   const path = page.src.entry?.path;
@@ -220,6 +277,7 @@ export default (
                     </span>
                   )}
                 </div>
+                {show_toc && <TableOfContents title={title} toc={toc} />}
               </>
             )
             : null}

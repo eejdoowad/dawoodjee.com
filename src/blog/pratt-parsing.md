@@ -2,6 +2,7 @@
 title: Pratt Parsing
 description: The definitive guide
 created: 2024-12-14
+show_toc: true
 ---
 
 Hundreds of Pratt parsing posts exist. I hope this one is relatively clear,
@@ -15,7 +16,7 @@ The
 [code](https://github.com/eejdoowad/dawoodjee.com/blob/main/src/static/assets/pratt-parsing/parser.ts)
 is public domain. Send feedback by email.
 
-## Motivation
+### Motivation
 
 This is an intuitive expression grammar.
 
@@ -46,7 +47,7 @@ factor = factor "^" number
 This grammar is _not_ intuitive. It gets worse if your parser cannot handle left
 recursion. And worse as you add more operators.
 
-## Pratt Parsing
+### Pratt Parsing
 
 Pratt parsing supports intuitive expression grammars. It resolves ambiguity by
 enforcing precedence and associativity in the parsing routine.
@@ -70,11 +71,14 @@ function next_token(ctx: Context): string | undefined;
 function peek_token(ctx: Context): string | undefined;
 ```
 
+## Precedence and Associativity
+
 ### No Precedence, Left-Associative Parser
 
 Start simple. Assume all operators are left-associative and without precedence.
 
-The expression grammar supports this with a repeated tail.
+The expression grammar supports this with a repeated tail that immediately
+applies the operator to expand the left-hand-side expression.
 
 ```
 expr = number (tail_op number)*
@@ -102,7 +106,8 @@ function expr(ctx) {
 
 Now assume all operators are right-associative and without precedence
 
-The expression grammar supports this with a right-recursive tail.
+The expression grammar supports this with a right-recursive tail that expands
+the expression on the right-hand-side before applying the operator.
 
 ```
 expr = number (tail_op expr)?
@@ -126,8 +131,6 @@ function expr(ctx) {
 
 ### Mixed-Associativity Parser
 
-In reality, operator precedence and associativity varies.
-
 Sometimes the parser should apply an operator immediately as in the first
 parser. Other times it should wait until later operators are applied as in the
 second parser.
@@ -135,9 +138,9 @@ second parser.
 Merge the grammars to enable this choice:
 
 ```rs
-expr = number (tail_op number)*   // Parser 1
-expr = number (tail_op expr  )?   // Parser 2
-expr = number (tail_op expr  )*   // Merged
+expr = number (tail_op number)*   // Parser 1: left-associative
+expr = number (tail_op expr  )?   // Parser 2: right-associative
+expr = number (tail_op expr  )*   // Merged: mixed-associative
 ```
 
 Take the second parser and rewrite `if` to `while`.
@@ -160,7 +163,7 @@ because it _always_ chooses to recurse until the input is exhausted.
 ### Respecting Precedence
 
 The key idea behind Pratt parsing is to use nested levels of recursion to
-represent nested expressions of increasing precedence.
+represent nested expressions of equal or increasing precedence.
 
 By definition, a level exits when an operator with lower precedence appears.
 
@@ -186,15 +189,16 @@ function expr(ctx, parent_op) {
 expr(ctx, Op.Root); // Expected syntax for parsing an expression.
 ```
 
+This parser respects precedence but makes all operators right-associative.
+
 ### Respecting Associativity
 
-The previous parser makes all operators right-associative because it does not
-consider how to handle operators of equal precedence.
+Associativity applies when two operators have equal precedence.
 
-- For right-associative operators, the parser should recurse to get the
-  right-hand-side expression.
-- For left-associative operators, the parser should return the current
-  expression to be the right-hand-side of the parent expression.
+From experience we know right-associative operators should recurse.
+
+Left-associative operators should instead return the current expression to be
+the right-hand-side of the parent expression.
 
 ```ts
 function expr(ctx, parent_op) {
@@ -212,7 +216,9 @@ function expr(ctx, parent_op) {
 }
 ```
 
-### Head and Tail
+## Adding Operators
+
+### Head and Tail Parsing
 
 To simplify future extensions, split the grammar into head and tail rules.
 
@@ -448,7 +454,7 @@ function expr_tail(ctx, parent_op, left_expr) {
 }
 ```
 
-### Ternary with Optional Else
+### Ternary Operator with Optional Else
 
 Modify the ternary operator so that the `: right` is optional.
 
@@ -477,6 +483,8 @@ function expr_tail(ctx, parent_op, left_expr) {
     return left_expr;
 }
 ```
+
+## Non-Associative Operators and Relative Precedence
 
 ### Non-Associative Operators
 
@@ -510,7 +518,7 @@ function expr_tail(ctx, parent_op, left_expr) {
 }
 ```
 
-### Operators with Unrelated Precedence
+### Relative Precedence
 
 Is `<<` or `**` higher precedence?
 
@@ -677,6 +685,8 @@ function cmp_precedence(op1, op2) {
 }
 ```
 
+## Wrap Up
+
 ### Error Handling
 
 Handle errors by checking for unexpected tokens.
@@ -766,26 +776,19 @@ It includes a scanner and makes greater use of types and enums.
 
 Run tests with `deno test parser.ts`.
 
-### Optional Reading: Binding Power
+### Binding Power
 
 Other posts explain Pratt parsing using "binding power."
 
 Each operator is assigned a left and right binding power based on its precedence
 and associativity:
 
-```ts
-bp_l["**"] = 5; // Exponentiation is right-associative so it has higher left
-bp_r["**"] = 6; // binding power.
-
-bp_l["*"] = 3; // Multiplication is left associative so it has higher right
-bp_r["*"] = 4; // binding power.
-
-bp_l["+"] = 1; // Addition has lower precedence than multiplication so it has
-bp_r["+"] = 2; // lower binding powers
-
-bp_l["-"] = 1; // Subtraction has the same precedence and associativity as addition
-bp_r["-"] = 2; // so it has the same binding powers.
-```
+| Operator | Left Binding Power | Right Binding Power | Notes                                                                             |
+| -------- | ------------------ | ------------------- | --------------------------------------------------------------------------------- |
+| **       | 5                  | 6                   | Right-associative operators have higher left binding power                        |
+| *        | 3                  | 4                   | Left-associative operators have higher right binding power                        |
+| +        | 1                  | 2                   | Operators with lower precedence have lower binding powers                         |
+| -        | 1                  | 2                   | Operators with the same precedence and associativity have the same binding powers |
 
 The condition for exiting a level is simplified to a binding power comparison.
 
@@ -793,15 +796,15 @@ The condition for exiting a level is simplified to a binding power comparison.
 function expr_tail(ctx, parent_op, left_expr) {
     while (has_token(ctx)) {
         // ...
-        if (bp_r[op] < bp_l[parent_op]) break;
+        if (binding_power_right(op) < binding_power_left(parent_op)) break;
         // ...
     }
     return left_expr;
 }
 ```
 
-Personally, I find binding power less intuitive than the equivalent precedence
-and associativity checks.
+I think binding power is less intuitive than the equivalent precedence and
+associativity checks.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
@@ -816,8 +819,8 @@ function expr_tail(ctx, parent_op, left_expr) {
 }
 ```
 
-I also think requiring parentheses on expressions that are ambiguous _to humans_
-is good language design.
+I think requiring parentheses on expressions that are ambiguous _to humans_ is
+good language design.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
@@ -836,5 +839,5 @@ function expr_tail(ctx, parent_op, left_expr) {
 }
 ```
 
-Unfortunately, binding power requires every operator to have global precedence
-and infix operators to be (left or right) associative.
+But binding power requires operators to have global precedence and
+associativity.
