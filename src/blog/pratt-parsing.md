@@ -585,8 +585,8 @@ relative precedence.
 Given precedence `P`, `P(Multiplication) > P(Comparison)` because precedence is
 transitive: `P(A) > P(B)` and `P(B) > P(C)` imply `P(A) > P(C)`.
 
-Precedence groups form a digraph. Note how BitwiseShift lacks an ordering
-relative to Exponentiation, Multiplication, and Addition.
+Precedence groups form a digraph. Note how BitwiseShift is unrelated to
+Exponentiation, Multiplication, and Addition.
 
 ### Implementation
 
