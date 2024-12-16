@@ -517,12 +517,15 @@ Is `<<` or `**` higher precedence?
 Since global precedence is confusing, let's instead define relative precedence
 between operator pairs and require parentheses for unrelated operators.
 
-| Expression     | Parse Result | Parse Trees                           |
-| -------------- | ------------ | ------------------------------------- |
-| `a << b`       | Ok           | `(a << b)`                            |
-| `a + b / c`    | Ok           | `(a + (b / c))`                       |
-| `a + b << c`   | Error        | `(a + (b << c))` and `((a + b) << c)` |
-| `a + (b << c)` | Ok           | `(a + (b << c))`                      |
+For example, if `Precedence(**) > Precedence(/)` is the only known precedence
+relationship, then expect the following parse results:
+
+| Expression      | Parse Result | Parse Trees                             |
+| --------------- | ------------ | --------------------------------------- |
+| `a << b`        | Ok           | `(a << b)`                              |
+| `a ** b / c`    | Ok           | `((a ** b) / c)`                        |
+| `a ** b << c`   | Ambiguous    | `(a ** (b << c))` and `((a ** b) << c)` |
+| `a ** (b << c)` | Ok           | `(a + (b << c))`                        |
 
 The parser's `cmp_precedence()` now returns `"!"` for unrelated operators.
 
