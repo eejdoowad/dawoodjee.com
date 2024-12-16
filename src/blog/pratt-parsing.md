@@ -372,13 +372,13 @@ expr_tail = infix_op expr
 subscript_op = "[" expr "]"
 ```
 
-Like `)` tokens, `]` tokens end expressions.
+Like `)` tokens, `]` tokens mark the end of an expression.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
     while (has_token(ctx)) {
         const token = peek_token(ctx);
-        if (if token === ")" || token === "]") break;
+        if (token === ")" || token === "]") break;
         const op = tail_op(token);
         const order = cmp_precedence(op, parent_op);
         if (order === "<") break;
@@ -416,7 +416,7 @@ expr_tail = infix_op expr
 ternary_op = "?" expr ":" expr
 ```
 
-`:` tokens end expressions.
+`:` tokens mark the end of an expression.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
