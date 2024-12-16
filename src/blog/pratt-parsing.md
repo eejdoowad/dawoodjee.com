@@ -785,7 +785,7 @@ and associativity:
 
 | Operator | Left Binding Power | Right Binding Power | Notes                                                                             |
 | -------- | ------------------ | ------------------- | --------------------------------------------------------------------------------- |
-| **       | 5                  | 6                   | Right-associative operators have higher left binding power                        |
+| **       | 6                  | 5                   | Right-associative operators have higher left binding power                        |
 | *        | 3                  | 4                   | Left-associative operators have higher right binding power                        |
 | +        | 1                  | 2                   | Operators with lower precedence have lower binding powers                         |
 | -        | 1                  | 2                   | Operators with the same precedence and associativity have the same binding powers |
