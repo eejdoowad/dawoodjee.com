@@ -52,9 +52,6 @@ recursion. And worse as you add more operators.
 Pratt parsing supports intuitive expression grammars. It resolves ambiguity by
 enforcing precedence and associativity in the parsing routine.
 
-Specifically, Pratt parsing encodes increasing precedence in nested recursive
-function calls.
-
 We'll build a series of gradually better parsers to explain how it works.
 
 ### The Scanner
