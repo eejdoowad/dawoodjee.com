@@ -216,7 +216,7 @@ function expr(ctx, parent_op) {
 expr(ctx, Op.Root); // Expected syntax for parsing an expression.
 ```
 
-This parser respects precedence but makes all operators right-associative.
+This parser respects precedence and associativity.
 
 ## Adding Operators
 
