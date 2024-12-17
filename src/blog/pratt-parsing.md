@@ -73,7 +73,7 @@ function peek_token(ctx: Context): string | undefined;
 
 ## Precedence and Associativity
 
-### No Precedence, Left-Associative Parser
+### Left-Associative Parser
 
 Start simple. Assume all operators are left-associative and without precedence.
 
@@ -102,7 +102,7 @@ function expr(ctx) {
 
 `1 + 2 + 3 * 4 * 5` parses as `((((1 + 2) + 3) + 4) + 5)`.
 
-### No Precedence, Right-Associative Parser
+### Right-Associative Parser
 
 Now assume all operators are right-associative and without precedence
 
@@ -129,13 +129,13 @@ function expr(ctx) {
 
 `1 + 2 + 3 * 4 * 5` parses as `(1 + (2 + (3 * (4 * 5))))`.
 
-### Mixed-Associativity Parser
+### Mixed-Associative Grammar
 
 Sometimes the parser should apply an operator immediately as in the first
 parser. Other times it should wait until later operators are applied as in the
 second parser.
 
-Merge the grammars to enable this choice:
+Merge the grammars to create an ambiguous grammar that enables this choice:
 
 ```rs
 expr = number (tail_op number)*   // Parser 1: left-associative
@@ -157,15 +157,40 @@ function expr(ctx) {
 }
 ```
 
-As written, this parser's behavior is indistinguishable from the second parser
-because it _always_ chooses to recurse until the input is exhausted.
+This parser resolves the grammar's ambiguity by always choosing to recurse,
+which makes it indistinguishable from the second parser.
+
+### Respecting Associativity
+
+From experience we know right-associative operators should recurse.
+
+Left-associative operators should instead return the current expression to form
+the right-hand-side of the parent expression.
+
+```ts
+function expr(ctx, parent_op) {
+    let left_expr = number(next_token(ctx));
+    while (has_token(ctx)) {
+        const op = tail_op(peek_token(ctx));
+        if (assoc(op) === "left") break;
+        next_token(ctx);
+        const right_expr = expr(ctx, op);
+        left_expr = infix(op, left_expr, right_expr);
+    }
+    return left_expr;
+}
+```
+
+Now the parser respects associativity but not precedence.
 
 ### Respecting Precedence
 
-The key idea behind Pratt parsing is to use nested levels of recursion to
-represent nested expressions of equal or increasing precedence.
+Pratt parsing uses nested levels of recursion to represent nested expressions of
+equal or increasing precedence.
 
 By definition, a level exits when an operator with lower precedence appears.
+
+Associativity determines how to handle operators with equal precedence.
 
 The parent operator determines a level's precedence. The root expression has no
 parent, which means minimum precedence.
@@ -174,33 +199,6 @@ parent, which means minimum precedence.
 // Compares the precedence of two operators
 function cmp_precedence(op1, op2): "<" | "=" | ">";
 
-function expr(ctx, parent_op) {
-    let left_expr = number(next_token(ctx));
-    while (has_token(ctx)) {
-        const op = tail_op(peek_token(ctx));
-        if (cmp_precedence(op, parent_op) === "<") break;
-        next_token(ctx);
-        const right_expr = expr(ctx, op);
-        left_expr = infix(op, left_expr, right_expr);
-    }
-    return left_expr;
-}
-
-expr(ctx, Op.Root); // Expected syntax for parsing an expression.
-```
-
-This parser respects precedence but makes all operators right-associative.
-
-### Respecting Associativity
-
-Associativity applies when two operators have equal precedence.
-
-From experience we know right-associative operators should recurse.
-
-Left-associative operators should instead return the current expression to be
-the right-hand-side of the parent expression.
-
-```ts
 function expr(ctx, parent_op) {
     let left_expr = number(next_token(ctx));
     while (has_token(ctx)) {
@@ -214,7 +212,11 @@ function expr(ctx, parent_op) {
     }
     return left_expr;
 }
+
+expr(ctx, Op.Root); // Expected syntax for parsing an expression.
 ```
+
+This parser respects precedence but makes all operators right-associative.
 
 ## Adding Operators
 
@@ -580,7 +582,8 @@ relative precedence.
 | Comparison       | == != < <= > >= | none          | Conjunction                  |
 | Conjunction      | &&              | left          | Disjunction                  |
 | Disjunction      | \|\|            | left          | Ternary                      |
-| Ternary          | ?:              | none          |                              |
+| Ternary          | ?:              | none          | Root                         |
+| Root             |                 | none          |                              |
 
 Given precedence `P`, `P(Multiplication) > P(Comparison)` because precedence is
 transitive: `P(A) > P(B)` and `P(B) > P(C)` imply `P(A) > P(C)`.
@@ -600,18 +603,12 @@ const enum Op {
     // ... remaining operators
 }
 const enum Group {
-    Root,
     Postfix,
     Prefix,
+    BitwiseShift,
     // ... remaining groups
 }
 const groups = [
-    {
-        id: Group.Root,
-        ops: [Op.Root],
-        assoc: "none",
-        gt: [Group.Postfix],
-    },
     {
         id: Group.Postfix,
         ops: [Op.PostfixPlusPlus, Op.PostfixMinusMinus /* , ... */],
@@ -623,6 +620,12 @@ const groups = [
         ops: [Op.PrefixPlusPlus, Op.PrefixMinusMinus /* , ... */],
         assoc: "none",
         gt: [Group.BitwiseShift, Group.Exponentiation],
+    },
+    {
+        id: Group.BitwiseShift,
+        ops: [Op.BitwiseShiftLeft, Op.BitwiseShiftRight],
+        assoc: "none",
+        gt: [Group.Comparison],
     },
     // ... remaining groups
 ];
