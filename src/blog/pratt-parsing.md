@@ -75,7 +75,7 @@ function peek_token(ctx: Context): string | undefined;
 Start simple. Assume all operators are left-associative and without precedence.
 
 The expression grammar supports this with a repeated tail that immediately
-applies the operator to expand the left-hand-side expression.
+applies the operator to expand expression to the left.
 
 ```
 expr = number (tail_op number)*
@@ -104,7 +104,7 @@ function expr(ctx) {
 Now assume all operators are right-associative and without precedence
 
 The expression grammar supports this with a right-recursive tail that expands
-the expression on the right-hand-side before applying the operator.
+the expression to the right before applying the operator.
 
 ```
 expr = number (tail_op expr)?
