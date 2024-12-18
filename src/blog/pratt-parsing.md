@@ -163,8 +163,8 @@ which makes it indistinguishable from the second parser.
 
 From experience we know right-associative operators should recurse.
 
-Left-associative operators should instead return the current expression to form
-the right-hand-side of the parent expression.
+Left-associative operators should instead return the current expression to
+become part of the parent expression.
 
 ```ts
 function expr(ctx, parent_op) {
