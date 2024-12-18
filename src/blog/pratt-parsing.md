@@ -572,7 +572,7 @@ relative precedence.
 
 | Precedence Group | Operators       | Associativity | Greater Precedence Than      |
 | ---------------- | --------------- | ------------- | ---------------------------- |
-| Postfix          | ++ -- []        | none          | Prefix                       |
+| Postfix          | ++ -- [         | none          | Prefix                       |
 | Prefix           | ++ -- + - !     | none          | BitwiseShift, Exponentiation |
 | BitwiseShift     | << >>           | none          | Comparison                   |
 | Exponentiation   | **              | right         | Multiplication               |
@@ -581,7 +581,7 @@ relative precedence.
 | Comparison       | == != < <= > >= | none          | Conjunction                  |
 | Conjunction      | &&              | left          | Disjunction                  |
 | Disjunction      | \|\|            | left          | Ternary                      |
-| Ternary          | ?:              | none          | Root                         |
+| Ternary          | ?               | right         | Root                         |
 | Root             |                 | none          |                              |
 
 Given precedence `P`, `P(Multiplication) > P(Comparison)` because precedence is
