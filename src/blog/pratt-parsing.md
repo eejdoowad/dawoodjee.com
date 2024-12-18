@@ -414,9 +414,6 @@ it has an unenclosed right argument.
 The middle expression is enclosed so other operators cannot affect how it is
 parsed.
 
-`: right` is paired to the closest unpaired `left ? middle` so that
-`a ? b ? c : d` parses as `a ? (b ? c : d)`.
-
 ```
 expr_tail = infix_op expr
           | postfix_op
