@@ -414,6 +414,9 @@ it has an unenclosed right argument.
 The middle expression is enclosed so other operators cannot affect how it is
 parsed.
 
+`: right` is paired to the closest unpaired `left ? middle` so that
+`a ? b ? c : d` parses as `a ? (b ? c : d)`.
+
 ```
 expr_tail = infix_op expr
           | postfix_op
@@ -457,9 +460,9 @@ function expr_tail(ctx, parent_op, left_expr) {
 
 ### Ternary Operator with Optional Else
 
-Modify the ternary operator so that the `: right` is optional.
+Modify the ternary operator so `: right` is optional.
 
-Pair every `:` to the closest unpaired `?` so that `a ? b ? c : d` is parsed as
+Pair `:` to the closest unpaired `?` so that `a ? b ? c : d` parses as
 `a ? (b ? c : d)`.
 
 ```
