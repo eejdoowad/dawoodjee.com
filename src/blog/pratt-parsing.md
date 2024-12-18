@@ -77,7 +77,7 @@ function peek_token(ctx: Context): string | undefined;
 Start simple. Assume all operators are left-associative and without precedence.
 
 The expression grammar supports this with a repeated tail that immediately
-applies the operator to expand expression to the left.
+applies the operator to expand the left expression.
 
 ```
 expr = number (tail_op number)*
@@ -189,7 +189,7 @@ equal or increasing precedence.
 
 By definition, a level exits when an operator with lower precedence appears.
 
-Associativity determines how to handle operators with equal precedence.
+By definition, associativity applies when operators have equal precedence.
 
 The parent operator determines a level's precedence. The root expression has no
 parent, which means minimum precedence.
