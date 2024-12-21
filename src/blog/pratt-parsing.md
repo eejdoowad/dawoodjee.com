@@ -77,20 +77,6 @@ Pratt parsers are easy to understand, implement, and integrate.
 
 We'll build a series of gradually better parsers to explain how it works.
 
-### Scanner
-
-Examples use this scanner interface.
-
-```ts
-interface Context {
-    tokens: string[];
-    index: number;
-}
-function has_token(ctx: Context): boolean;
-function next_token(ctx: Context): string | undefined;
-function peek_token(ctx: Context): string | undefined;
-```
-
 ## Precedence and Associativity
 
 ### Left-Associative Parser
@@ -791,7 +777,40 @@ function parse(ctx) {
 }
 ```
 
-### Final Parser Code
+### Grammar
+
+This is the final grammar.
+
+```
+expr = expr_head expr_tail*
+
+expr_head = number
+          | prefix_op expr
+
+expr_tail = infix_op expr
+          | postfix_op
+          | "[" expr "]"
+          | "?" expr (":" expr)?
+```
+
+The parser produces syntax trees of this form.
+
+```
+expr = number
+     | prefix
+     | postfix
+     | infix
+     | ternary
+     | subscript
+
+prefix = prefix_op expr
+postfix = expr postfix_op
+infix = expr infix_op expr
+ternary = expr "?" expr (":" expr)?
+subscript = expr "[" expr "]"
+```
+
+### Parser
 
 Code for the final parser is
 [here](https://github.com/eejdoowad/dawoodjee.com/blob/main/src/static/assets/pratt-parsing/parser.ts)
