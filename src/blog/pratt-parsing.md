@@ -49,9 +49,9 @@ recursion. And worse as you add more operators.
 
 The resulting syntax trees are cumbersome.
 
-### Pratt Parsing
+### Overview
 
-Pratt parsing uses intuitive expression grammars of this form.
+Pratt parsing uses grammars of this form.
 
 ```
 expr = head tail*
@@ -62,11 +62,18 @@ head = number
 tail = ("+" | "-" | "*" | "/" | "^") expr
 ```
 
-The parsing routine applies precedence and associativity rules to resolve the
-grammar's ambiguity.
+And produces syntax trees of this form.
 
-Pratt parsers are easy to understand, implement, and integrate. They produce
-nice syntax trees.
+```
+expr = expr ("+" | "-" | "*" | "/" | "^") expr
+     | "-" expr
+     | number
+```
+
+The parsing routine applies precedence and associativity rules to resolve
+grammar ambiguity.
+
+Pratt parsers are easy to understand, implement, and integrate.
 
 We'll build a series of gradually better parsers to explain how it works.
 
