@@ -90,7 +90,7 @@ function peek_token(ctx: Context): string | undefined;
 
 Start simple. Assume all operators are left-associative and without precedence.
 
-Parse `1 + 2 + 3 * 4 * 5` as `((((1 + 2) + 3) + 4) + 5)`.
+Parse `1 + 2 + 3 * 4 * 5` as `((((1 + 2) + 3) * 4) * 5)`.
 
 The expression grammar supports this with a repeated tail that immediately
 applies the operator to expand the left expression.
