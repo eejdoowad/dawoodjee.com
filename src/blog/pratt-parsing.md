@@ -21,7 +21,7 @@ is public domain. Send feedback by email.
 This is an intuitive expression grammar.
 
 ```
-expr = expr ("+" | "-" | "*" | "/") expr
+expr = expr ("+" | "-" | "*" | "/" | "^") expr
      | "-" expr
      | number
 ```
@@ -59,7 +59,7 @@ expr = head tail*
 head = number
      | "-" expr
 
-tail = ("^" | "*" | "/" | "+" | "-") expr
+tail = ("+" | "-" | "*" | "/" | "^") expr
 ```
 
 The grammar is ambiguous, but that's okay. The parsing routine applies
