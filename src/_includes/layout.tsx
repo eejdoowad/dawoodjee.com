@@ -24,7 +24,7 @@ const styles = css`
 pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*! */.hljs{color:#2f3337;background:#f6f6f6}.hljs-subst{color:#2f3337}.hljs-comment{color:#656e77}.hljs-attr,.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-section,.hljs-selector-tag{color:#015692}.hljs-attribute{color:#803378}.hljs-name,.hljs-number,.hljs-quote,.hljs-selector-id,.hljs-template-tag,.hljs-type{color:#b75501}.hljs-selector-class{color:#015692}.hljs-link,.hljs-regexp,.hljs-selector-attr,.hljs-string,.hljs-symbol,.hljs-template-variable,.hljs-variable{color:#54790d}.hljs-meta,.hljs-selector-pseudo{color:#015692}.hljs-built_in,.hljs-literal,.hljs-title{color:#b75501}.hljs-bullet,.hljs-code{color:#535a60}.hljs-meta .hljs-string{color:#54790d}.hljs-deletion{color:#c02d2e}.hljs-addition{color:#2f6f44}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}
 
 /* My style resets */
-a {text-decoration: none}
+:is(h1, h2, h3, h4, h5, h6) a {text-decoration: none}
 input[type="search"]{border-width: 0; width: 100%}
 html {line-height: 1.6}
 
@@ -65,6 +65,7 @@ body > :is(nav, main, footer) {
   border-radius: 16px;
   padding: 0 12px;
   line-height: 2rem;
+  text-decoration: none;
 }
 .grow {
   flex-grow: 1;
