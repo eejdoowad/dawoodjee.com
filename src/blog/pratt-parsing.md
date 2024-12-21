@@ -77,7 +77,7 @@ Pratt parsers are easy to understand, implement, and integrate.
 
 We'll build a series of gradually better parsers to explain how it works.
 
-### The Scanner
+### Scanner
 
 Examples use this scanner interface.
 
