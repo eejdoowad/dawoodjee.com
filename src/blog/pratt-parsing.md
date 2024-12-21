@@ -90,6 +90,8 @@ function peek_token(ctx: Context): string | undefined;
 
 Start simple. Assume all operators are left-associative and without precedence.
 
+Parse `1 + 2 + 3 * 4 * 5` as `((((1 + 2) + 3) + 4) + 5)`.
+
 The expression grammar supports this with a repeated tail that immediately
 applies the operator to expand the left expression.
 
@@ -113,11 +115,11 @@ function expr(ctx) {
 }
 ```
 
-`1 + 2 + 3 * 4 * 5` parses as `((((1 + 2) + 3) + 4) + 5)`.
-
 ### Right-Associative Parser
 
 Now assume all operators are right-associative and without precedence
+
+Parse `1 + 2 + 3 * 4 * 5` as `(1 + (2 + (3 * (4 * 5))))`.
 
 The expression grammar supports this with a right-recursive tail that expands
 the expression to the right before applying the operator.
@@ -139,8 +141,6 @@ function expr(ctx) {
     return left_expr;
 }
 ```
-
-`1 + 2 + 3 * 4 * 5` parses as `(1 + (2 + (3 * (4 * 5))))`.
 
 ### Mixed-Associative Grammar
 
