@@ -595,16 +595,12 @@ function error_unrelated_ops(op1: Op, op2: Op) {
 //
 
 function parse(ctx: Context): Expr {
-    const e = expr(ctx);
+    const e = expr(ctx, Op.Root);
     if (has_token(ctx)) throw error_bad_token(peek_token(ctx));
     return e;
 }
 
-function expr(ctx: Context): Expr {
-    return expr_child(ctx, Op.Root);
-}
-
-function expr_child(ctx: Context, parent_op: Op): Expr {
+function expr(ctx: Context, parent_op: Op): Expr {
     const left_expr = expr_head(ctx);
     return expr_tail(ctx, parent_op, left_expr);
 }
@@ -612,7 +608,7 @@ function expr_child(ctx: Context, parent_op: Op): Expr {
 function expr_head(ctx: Context): Expr {
     const token = next_token(ctx);
     if (token === "(") {
-        const right_expr = expr(ctx);
+        const right_expr = expr(ctx, Op.Root);
         const rparen = next_token(ctx);
         if (rparen !== ")") throw error_bad_token(rparen, ")");
         return right_expr;
@@ -620,7 +616,7 @@ function expr_head(ctx: Context): Expr {
         return number(token);
     } else if (is_prefix_op_token(token)) {
         const op = prefix_op(token);
-        const right_expr = expr_child(ctx, op);
+        const right_expr = expr(ctx, op);
         return prefix(op, right_expr);
     } else {
         throw error_bad_token(token ?? "EOF");
@@ -646,22 +642,22 @@ function expr_tail(
         }
         next_token(ctx);
         if (op === Op.Ternary) {
-            const middle_expr = expr(ctx);
+            const middle_expr = expr(ctx, Op.Root);
             let right_expr = undefined;
             if (peek_token(ctx) === ":") {
                 next_token(ctx);
-                right_expr = expr_child(ctx, op);
+                right_expr = expr(ctx, op);
             }
             left_expr = ternary(left_expr, middle_expr, right_expr);
         } else if (op === Op.Subscript) {
-            const middle_expr = expr(ctx);
+            const middle_expr = expr(ctx, Op.Root);
             const rbracket = next_token(ctx);
             if (rbracket !== "]") throw error_bad_token(rbracket, "]");
             left_expr = subscript(left_expr, middle_expr);
         } else if (is_postfix_op(op)) {
             left_expr = postfix(op, left_expr);
         } else if (is_infix_op(op)) {
-            const right_expr = expr_child(ctx, op);
+            const right_expr = expr(ctx, op);
             left_expr = infix(op, left_expr, right_expr);
         }
     }

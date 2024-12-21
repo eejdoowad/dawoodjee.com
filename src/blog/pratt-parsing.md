@@ -387,8 +387,8 @@ function expr_tail(ctx, parent_op, left_expr) {
 
 ### Subscript Operator
 
-The (array) subscript operator resembles a postfix operator because there is no
-right argument.
+The (array) subscript operator `[` resembles a postfix operator because there is
+no right argument.
 
 Brackets prevent other operators from interacting with the enclosed expression.
 
@@ -732,7 +732,7 @@ function expr_head(ctx) {
         return number(token);
     } else if (is_prefix_op_token(token)) {
         const op = prefix_op(token);
-        const right_expr = expr_child(ctx, op);
+        const right_expr = expr(ctx, op);
         return prefix(op, right_expr);
     } else {
         throw error_bad_token(token ?? "EOF");
@@ -762,7 +762,7 @@ function expr_tail(ctx, parent_op, left_expr) {
             let right_expr = undefined;
             if (peek_token(ctx) === ":") {
                 next_token(ctx);
-                right_expr = expr_child(ctx, op);
+                right_expr = expr(ctx, op);
             }
             left_expr = ternary(left_expr, middle_expr, right_expr);
         } else if (op === Op.Subscript) {
@@ -773,7 +773,7 @@ function expr_tail(ctx, parent_op, left_expr) {
         } else if (is_postfix_op(op)) {
             left_expr = postfix(op, left_expr);
         } else if (is_infix_op(op)) {
-            const right_expr = expr_child(ctx, op);
+            const right_expr = expr(ctx, op);
             left_expr = infix(op, left_expr, right_expr);
         }
     }
