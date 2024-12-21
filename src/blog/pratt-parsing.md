@@ -62,8 +62,8 @@ head = number
 tail = ("+" | "-" | "*" | "/" | "^") expr
 ```
 
-The grammar is ambiguous, but that's okay. The parsing routine applies
-precedence and associativity rules to resolve ambiguity.
+The parsing routine applies precedence and associativity rules to resolve the
+grammar's ambiguity.
 
 Pratt parsers are easy to understand, implement, and integrate. The resulting
 syntax trees are nice.
