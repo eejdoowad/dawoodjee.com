@@ -79,7 +79,7 @@ We'll build a series of gradually better parsers to explain how it works.
 
 ### The Scanner
 
-Assume this interface for the scanner.
+Examples use this scanner interface.
 
 ```ts
 interface Context {
