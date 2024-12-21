@@ -45,14 +45,27 @@ factor = factor "^" number
 ```
 
 This grammar is _not_ intuitive. It gets worse if your parser cannot handle left
-recursion. And worse as you add more operators.
+recursion. And worse as you add more operators. And the resulting syntax trees
+are cumbersome.
 
 ### Pratt Parsing
 
-Pratt parsing supports intuitive expression grammars. It resolves ambiguity by
-enforcing precedence and associativity in the parsing routine.
+Pratt parsing uses intuitive expression grammars of this form.
 
-Pratt parsers are easy to understand, implement, and integrate.
+```
+expr = head tail*
+
+head = number
+     | "-" expr
+
+tail = ("^" | "*" | "/" | "+" | "-") expr
+```
+
+The grammar is ambiguous, but that's okay. The parsing routine applies
+precedence and associativity rules to resolve ambiguity.
+
+Pratt parsers are easy to understand, implement, and integrate. The resulting
+syntax trees are nice.
 
 We'll build a series of gradually better parsers to explain how it works.
 
