@@ -50,7 +50,7 @@ are cumbersome.
 
 ### Pratt Parsing
 
-Pratt parsing uses intuitive expression grammars of this form:
+Pratt parsing uses intuitive expression grammars of this form.
 
 ```
 expr = head tail*
