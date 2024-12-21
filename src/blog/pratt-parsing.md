@@ -65,8 +65,8 @@ tail = ("+" | "-" | "*" | "/" | "^") expr
 The parsing routine applies precedence and associativity rules to resolve the
 grammar's ambiguity.
 
-Pratt parsers are easy to understand, implement, and integrate. The resulting
-syntax trees are nice.
+Pratt parsers are easy to understand, implement, and integrate. They produce
+nice syntax trees.
 
 We'll build a series of gradually better parsers to explain how it works.
 
