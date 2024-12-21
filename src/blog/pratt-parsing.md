@@ -45,8 +45,9 @@ factor = factor "^" number
 ```
 
 This grammar is _not_ intuitive. It gets worse if your parser cannot handle left
-recursion. And worse as you add more operators. And the resulting syntax trees
-are cumbersome.
+recursion. And worse as you add more operators.
+
+The resulting syntax trees are cumbersome.
 
 ### Pratt Parsing
 
