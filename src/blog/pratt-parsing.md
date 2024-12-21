@@ -767,16 +767,6 @@ function expr_tail(ctx, parent_op, left_expr) {
 }
 ```
 
-The parser should parse exactly one expression.
-
-```ts
-function parse(ctx) {
-    const e = expr(ctx, Op.Root);
-    if (has_token(ctx)) throw error_bad_token(peek_token(ctx));
-    return e;
-}
-```
-
 ### Grammar
 
 This is the final grammar.
