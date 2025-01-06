@@ -104,8 +104,8 @@ main :is(p, h1, h2, h3, h4, h5, h6, details) {
   padding: 0 12px;
 }
 main > div > pre {
-  width: min(1020px, 100vw);
   display: flex;
+  width: min(1020px, 100vw);
   justify-content: center;
   margin-left: 50%;
   transform: translateX(-50%);
@@ -114,19 +114,21 @@ pre > code {
   display: block;
   overflow: scroll;
   min-width: min(630px, 100vw);
-  max-width: 1020px;
   padding: 20px 12px;
 }
 code {
   background-color: #f2f2f2;
 }
-table {
-  display: block;
+.table-div {
+  display: flex;
   width: min(1020px, 100vw);
-  min-width: min(630px, 100vw);
-  overflow-x: scroll;
+  justify-content: center;
   margin-left: 50%;
   transform: translateX(-50%);
+}
+table {
+  display: block;
+  overflow-x: scroll;
   border-collapse: collapse;
   text-align: left;
 }

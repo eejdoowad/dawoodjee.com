@@ -5,6 +5,7 @@
       "npm:@js-temporal/polyfill@0.4.4": "npm:@js-temporal/polyfill@0.4.4",
       "npm:highlight.js": "npm:highlight.js@11.9.0",
       "npm:highlight.js@11.9.0": "npm:highlight.js@11.9.0",
+      "npm:markdown-it": "npm:markdown-it@14.0.0",
       "npm:markdown-it-attrs@4.1.6": "npm:markdown-it-attrs@4.1.6_markdown-it@14.0.0",
       "npm:markdown-it-deflist@3.0.0": "npm:markdown-it-deflist@3.0.0",
       "npm:markdown-it@14.0.0": "npm:markdown-it@14.0.0",
