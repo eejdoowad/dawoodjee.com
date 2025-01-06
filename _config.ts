@@ -39,4 +39,6 @@ site.use(feed({
   },
 }));
 
+site.hooks.addMarkdownItRule;
+
 export default site;

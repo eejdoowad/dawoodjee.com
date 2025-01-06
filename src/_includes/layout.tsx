@@ -122,8 +122,11 @@ code {
 }
 table {
   display: block;
-  width: min(630px, 100vw);
-  overflow: scroll;
+  width: min(1020px, 100vw);
+  min-width: min(630px, 100vw);
+  overflow-x: scroll;
+  margin-left: 50%;
+  transform: translateX(-50%);
   border-collapse: collapse;
   text-align: left;
 }
@@ -140,6 +143,8 @@ details > .toc {
 summary {
   text-align: center;
   font-weight: bold;
+  user-select: none;
+  -webkit-user-select: none;
 }
 summary:hover {
   cursor: pointer;
@@ -220,7 +225,7 @@ export default (
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{title}</title>
+        <title>{title}{description ? ` - ${description}` : ""}</title>
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
       </head>
       <body>
