@@ -60,12 +60,20 @@ body > :is(nav, main, footer) {
   margin: 12px 0px;
 }
 .control {
-  display: block;
+  display: inline-block;
   background-color: #f2f2f2;
   border-radius: 16px;
   padding: 0 12px;
   line-height: 2rem;
   text-decoration: none;
+}
+.interactive:hover {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.monospace {
+  font-family: ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;
 }
 .grow {
   flex-grow: 1;
@@ -121,7 +129,7 @@ code {
 }
 .table-div {
   display: flex;
-  width: min(1020px, 100vw);
+  width: 100vw;
   justify-content: center;
   margin-left: 50%;
   transform: translateX(-50%);
@@ -153,12 +161,14 @@ summary:hover {
 }
 `;
 
+type Feature = "recipe" | "toc";
+
 interface CustomLumeData extends Lume.Data {
   kind: "unkown" | "error" | "home" | "post";
   description?: string;
   created?: Date;
   updated?: Date;
-  show_toc?: boolean;
+  features?: Feature[];
   toc: Node[];
 }
 
@@ -204,6 +214,18 @@ function TableOfContentsItem({ node }: { node: Node }) {
   );
 }
 
+const lockjs = `
+let lock, checkbox = document.getElementById('no-sleep')
+checkbox.addEventListener('change', async () => {
+  if (checkbox.checked) lock = await navigator.wakeLock.request('screen')
+  else {
+    await lock?.release()
+    lock = undefined
+  }
+})
+document.addEventListener('visibilitychange', () => lock && document.hidden && checkbox.click())
+`;
+
 export default (
   {
     title,
@@ -214,7 +236,7 @@ export default (
     updated,
     description,
     toc,
-    show_toc,
+    features = [],
   }: CustomLumeData,
 ) => {
   const path = page.src.entry?.path;
@@ -284,8 +306,16 @@ export default (
                       </time>
                     </span>
                   )}
+                  {features.includes("recipe") && (
+                    <label class="control interactive">
+                      <input type="checkbox" id="no-sleep" /> No Sleep
+                      <script dangerouslySetInnerHTML={{ __html: lockjs }} />
+                    </label>
+                  )}
                 </div>
-                {show_toc && <TableOfContents title={title} toc={toc} />}
+                {features.includes("toc") && (
+                  <TableOfContents title={title} toc={toc} />
+                )}
               </>
             )
             : null}

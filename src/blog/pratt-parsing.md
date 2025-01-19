@@ -2,7 +2,7 @@
 title: Pratt Parsing
 description: The definitive guide
 created: 2024-12-14
-show_toc: true
+features: ["toc"]
 ---
 
 Hundreds of Pratt parsing posts exist. I hope this one is relatively clear,

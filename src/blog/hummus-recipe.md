@@ -2,6 +2,7 @@
 title: Hummus Recipe
 description: Simple but Good
 created: 2024-10-19
+features: ["recipe"]
 ---
 
 ## Ingredients

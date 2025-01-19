@@ -21,9 +21,6 @@ export default ({ search }: Lume.Data) => {
           eejdoowad AT gmail
         </span>
         <a class="control" href="https://github.com/eejdoowad">GitHub</a>
-        <a class="control" href="https://www.linkedin.com/in/sufyand">
-          Linkedin
-        </a>
         <a
           href="https://docs.google.com/document/d/1U_FCfa9SF4lXnMFnVbS7BQOD4qt_iFXrE_rowdgv5KE/edit?usp=sharing&resourcekey=0-O6cf5_kPTwdW0jF2i3tWcQ"
           class="control"
@@ -37,7 +34,7 @@ export default ({ search }: Lume.Data) => {
             b.created - a.created
           ).map((page) => (
             <li>
-              <span style="margin-right: 12px;">
+              <span class="monospace" style="margin-right: 12px;">
                 {toDateString(page.created)}
               </span>{" "}
               <a href={page.url}>

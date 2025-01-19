@@ -2,6 +2,7 @@
 title: Kumquat Marmalade
 description: Yummy with toast and butter
 created: 2024-03-10
+features: ["recipe"]
 ---
 
 ![Jars of marmalade](/assets/kumquat-marmalade-recipe/jars-of-marmalade.avif#small)
