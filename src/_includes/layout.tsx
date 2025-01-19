@@ -215,7 +215,7 @@ function TableOfContentsItem({ node }: { node: Node }) {
 }
 
 const lockjs = `
-let lock, checkbox = document.getElementById('no-sleep')
+let lock, checkbox = document.getElementById('cook-mode')
 checkbox.addEventListener('change', async () => {
   if (checkbox.checked) lock = await navigator.wakeLock.request('screen')
   else {
@@ -308,7 +308,7 @@ export default (
                   )}
                   {features.includes("recipe") && (
                     <label class="control interactive">
-                      <input type="checkbox" id="no-sleep" /> No Sleep
+                      <input type="checkbox" id="cook-mode" /> Cook Mode
                       <script dangerouslySetInnerHTML={{ __html: lockjs }} />
                     </label>
                   )}
