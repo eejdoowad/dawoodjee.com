@@ -98,13 +98,13 @@ The implementation reflects the grammar.
 
 ```ts
 function expr(ctx) {
-    let left_expr = number(next_token(ctx));
-    while (has_token(ctx)) {
-        const op = tail_op(next_token(ctx));
-        const right_expr = number(next_token(ctx));
-        left_expr = infix(op, left_expr, right_expr);
-    }
-    return left_expr;
+  let left_expr = number(next_token(ctx));
+  while (has_token(ctx)) {
+    const op = tail_op(next_token(ctx));
+    const right_expr = number(next_token(ctx));
+    left_expr = infix(op, left_expr, right_expr);
+  }
+  return left_expr;
 }
 ```
 
@@ -125,13 +125,13 @@ The implementation reflects the grammar.
 
 ```ts
 function expr(ctx) {
-    let left_expr = number(next_token(ctx));
-    if (has_token(ctx)) {
-        const op = tail_op(next_token(ctx));
-        const right_expr = expr(ctx);
-        left_expr = infix(op, left_expr, right_expr);
-    }
-    return left_expr;
+  let left_expr = number(next_token(ctx));
+  if (has_token(ctx)) {
+    const op = tail_op(next_token(ctx));
+    const right_expr = expr(ctx);
+    left_expr = infix(op, left_expr, right_expr);
+  }
+  return left_expr;
 }
 ```
 
@@ -153,13 +153,13 @@ Take the second parser and rewrite `if` to `while`.
 
 ```ts
 function expr(ctx) {
-    let left_expr = number(next_token(ctx));
-    while (has_token(ctx)) {
-        const op = tail_op(next_token(ctx));
-        const right_expr = expr(ctx);
-        left_expr = infix(op, left_expr, right_expr);
-    }
-    return left_expr;
+  let left_expr = number(next_token(ctx));
+  while (has_token(ctx)) {
+    const op = tail_op(next_token(ctx));
+    const right_expr = expr(ctx);
+    left_expr = infix(op, left_expr, right_expr);
+  }
+  return left_expr;
 }
 ```
 
@@ -175,15 +175,15 @@ become part of the parent expression.
 
 ```ts
 function expr(ctx, parent_op) {
-    let left_expr = number(next_token(ctx));
-    while (has_token(ctx)) {
-        const op = tail_op(peek_token(ctx));
-        if (assoc(op) === "left") break;
-        next_token(ctx);
-        const right_expr = expr(ctx, op);
-        left_expr = infix(op, left_expr, right_expr);
-    }
-    return left_expr;
+  let left_expr = number(next_token(ctx));
+  while (has_token(ctx)) {
+    const op = tail_op(peek_token(ctx));
+    if (assoc(op) === "left") break;
+    next_token(ctx);
+    const right_expr = expr(ctx, op);
+    left_expr = infix(op, left_expr, right_expr);
+  }
+  return left_expr;
 }
 ```
 
@@ -206,17 +206,17 @@ parent, which means minimum precedence.
 function cmp_precedence(op1, op2): "<" | "=" | ">";
 
 function expr(ctx, parent_op) {
-    let left_expr = number(next_token(ctx));
-    while (has_token(ctx)) {
-        const op = tail_op(peek_token(ctx));
-        const order = cmp_precedence(op, parent_op);
-        if (order === "<") break;
-        if (order === "=" && assoc(op) === "left") break;
-        next_token(ctx);
-        const right_expr = expr(ctx, op);
-        left_expr = infix(op, left_expr, right_expr);
-    }
-    return left_expr;
+  let left_expr = number(next_token(ctx));
+  while (has_token(ctx)) {
+    const op = tail_op(peek_token(ctx));
+    const order = cmp_precedence(op, parent_op);
+    if (order === "<") break;
+    if (order === "=" && assoc(op) === "left") break;
+    next_token(ctx);
+    const right_expr = expr(ctx, op);
+    left_expr = infix(op, left_expr, right_expr);
+  }
+  return left_expr;
 }
 
 expr(ctx, Op.Root); // Expected syntax for parsing an expression.
@@ -242,23 +242,23 @@ Refactor the parser accordingly.
 
 ```ts
 function expr(ctx, parent_op) {
-    const left_expr = expr_head(ctx);
-    return expr_tail(ctx, parent_op, left_expr);
+  const left_expr = expr_head(ctx);
+  return expr_tail(ctx, parent_op, left_expr);
 }
 function expr_head(ctx) {
-    return number(next_token(ctx));
+  return number(next_token(ctx));
 }
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        const op = tail_op(peek_token(ctx));
-        const order = cmp_precedence(op, parent_op);
-        if (order === "<") break;
-        if (order === "=" && assoc(op) === "left") break;
-        next_token(ctx);
-        const right_expr = expr(ctx, op);
-        left_expr = infix(op, left_expr, right_expr);
-    }
-    return left_expr;
+  while (has_token(ctx)) {
+    const op = tail_op(peek_token(ctx));
+    const order = cmp_precedence(op, parent_op);
+    if (order === "<") break;
+    if (order === "=" && assoc(op) === "left") break;
+    next_token(ctx);
+    const right_expr = expr(ctx, op);
+    left_expr = infix(op, left_expr, right_expr);
+  }
+  return left_expr;
 }
 ```
 
@@ -276,14 +276,14 @@ Operators like `-` can have overloaded infix and prefix definitions because
 
 ```ts
 function expr_head(ctx) {
-    const token = next_token(ctx);
-    if (is_number_token(token)) {
-        return number(token);
-    } else {
-        const op = prefix_op(token);
-        const right_expr = expr(ctx, op);
-        return prefix(op, right_expr);
-    }
+  const token = next_token(ctx);
+  if (is_number_token(token)) {
+    return number(token);
+  } else {
+    const op = prefix_op(token);
+    const right_expr = expr(ctx, op);
+    return prefix(op, right_expr);
+  }
 }
 ```
 
@@ -301,20 +301,20 @@ differentiate the two cases. Disallow this to simplify parsing.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        const op = tail_op(peek_token(ctx));
-        const order = cmp_precedence(op, parent_op);
-        if (order === "<") break;
-        if (order === "=" && assoc(op) === "left") break;
-        next_token(ctx);
-        if (is_postfix_op(op)) {
-            left_expr = postfix(op, left_expr);
-        } else {
-            const right_expr = expr(ctx, op);
-            left_expr = infix(op, left_expr, right_expr);
-        }
+  while (has_token(ctx)) {
+    const op = tail_op(peek_token(ctx));
+    const order = cmp_precedence(op, parent_op);
+    if (order === "<") break;
+    if (order === "=" && assoc(op) === "left") break;
+    next_token(ctx);
+    if (is_postfix_op(op)) {
+      left_expr = postfix(op, left_expr);
+    } else {
+      const right_expr = expr(ctx, op);
+      left_expr = infix(op, left_expr, right_expr);
     }
-    return left_expr;
+  }
+  return left_expr;
 }
 ```
 
@@ -333,18 +333,18 @@ expression, so precedence is reset.
 
 ```ts
 function expr_head(ctx) {
-    const token = next_token(ctx);
-    if (token === "(") {
-        const right_expr = expr(ctx, Op.Root);
-        next_token(ctx); // consume ")"
-        return right_expr;
-    } else if (is_number_token(token)) {
-        return number(token);
-    } else {
-        const op = prefix_op(token);
-        const right_expr = expr(ctx, op);
-        return prefix(op, right_expr);
-    }
+  const token = next_token(ctx);
+  if (token === "(") {
+    const right_expr = expr(ctx, Op.Root);
+    next_token(ctx); // consume ")"
+    return right_expr;
+  } else if (is_number_token(token)) {
+    return number(token);
+  } else {
+    const op = prefix_op(token);
+    const right_expr = expr(ctx, op);
+    return prefix(op, right_expr);
+  }
 }
 ```
 
@@ -353,21 +353,21 @@ the end of an expression.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        const token = peek_token(ctx);
-        if (token === ")") break;
-        const order = cmp_precedence(op, parent_op);
-        if (order === "<") break;
-        if (order === "=" && assoc(op) === "left") break;
-        next_token(ctx);
-        if (is_postfix_op(op)) {
-            left_expr = postfix(op, left_expr);
-        } else {
-            const right_expr = expr(ctx, op);
-            left_expr = infix(op, left_expr, right_expr);
-        }
+  while (has_token(ctx)) {
+    const token = peek_token(ctx);
+    if (token === ")") break;
+    const order = cmp_precedence(op, parent_op);
+    if (order === "<") break;
+    if (order === "=" && assoc(op) === "left") break;
+    next_token(ctx);
+    if (is_postfix_op(op)) {
+      left_expr = postfix(op, left_expr);
+    } else {
+      const right_expr = expr(ctx, op);
+      left_expr = infix(op, left_expr, right_expr);
     }
-    return left_expr;
+  }
+  return left_expr;
 }
 ```
 
@@ -390,26 +390,26 @@ Like `)` tokens, `]` tokens mark the end of an expression.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        const token = peek_token(ctx);
-        if (token === ")" || token === "]") break;
-        const op = tail_op(token);
-        const order = cmp_precedence(op, parent_op);
-        if (order === "<") break;
-        if (order === "=" && assoc(op) === "left") break;
-        next_token(ctx);
-        if (op === Op.Subscript) {
-            const middle_expr = expr(ctx, Op.Root);
-            next_token(ctx); // consume "]"
-            left_expr = subscript(left_expr, middle_expr);
-        } else if (is_postfix_op(op)) {
-            left_expr = postfix(op, left_expr);
-        } else {
-            const right_expr = expr(ctx, op);
-            left_expr = infix(op, left_expr, right_expr);
-        }
+  while (has_token(ctx)) {
+    const token = peek_token(ctx);
+    if (token === ")" || token === "]") break;
+    const op = tail_op(token);
+    const order = cmp_precedence(op, parent_op);
+    if (order === "<") break;
+    if (order === "=" && assoc(op) === "left") break;
+    next_token(ctx);
+    if (op === Op.Subscript) {
+      const middle_expr = expr(ctx, Op.Root);
+      next_token(ctx); // consume "]"
+      left_expr = subscript(left_expr, middle_expr);
+    } else if (is_postfix_op(op)) {
+      left_expr = postfix(op, left_expr);
+    } else {
+      const right_expr = expr(ctx, op);
+      left_expr = infix(op, left_expr, right_expr);
     }
-    return left_expr;
+  }
+  return left_expr;
 }
 ```
 
@@ -434,31 +434,31 @@ ternary_op = "?" expr ":" expr
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        const token = peek_token(ctx);
-        if (token === ")" || token === "]" || token === ":") break;
-        const op = tail_op(token);
-        const order = cmp_precedence(op, parent_op);
-        if (order === "<") break;
-        if (order === "=" && assoc(op) === "left") break;
-        next_token(ctx);
-        if (op === Op.Ternary) {
-            const middle_expr = expr(ctx, Op.Root);
-            next_token(ctx); // consume ":"
-            const right_expr = expr(ctx, op);
-            left_expr = ternary(left_expr, middle_expr, right_expr);
-        } else if (op === Op.Subscript) {
-            const middle_expr = expr(ctx, Op.Root);
-            next_token(ctx); // consume "]"
-            left_expr = subscript(left_expr, middle_expr);
-        } else if (is_postfix_op(op)) {
-            left_expr = postfix(op, left_expr);
-        } else {
-            const right_expr = expr(ctx, op);
-            left_expr = infix(op, left_expr, right_expr);
-        }
+  while (has_token(ctx)) {
+    const token = peek_token(ctx);
+    if (token === ")" || token === "]" || token === ":") break;
+    const op = tail_op(token);
+    const order = cmp_precedence(op, parent_op);
+    if (order === "<") break;
+    if (order === "=" && assoc(op) === "left") break;
+    next_token(ctx);
+    if (op === Op.Ternary) {
+      const middle_expr = expr(ctx, Op.Root);
+      next_token(ctx); // consume ":"
+      const right_expr = expr(ctx, op);
+      left_expr = ternary(left_expr, middle_expr, right_expr);
+    } else if (op === Op.Subscript) {
+      const middle_expr = expr(ctx, Op.Root);
+      next_token(ctx); // consume "]"
+      left_expr = subscript(left_expr, middle_expr);
+    } else if (is_postfix_op(op)) {
+      left_expr = postfix(op, left_expr);
+    } else {
+      const right_expr = expr(ctx, op);
+      left_expr = infix(op, left_expr, right_expr);
     }
-    return left_expr;
+  }
+  return left_expr;
 }
 ```
 
@@ -475,20 +475,20 @@ ternary_op = "?" expr (":" expr)?
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        // ...
-        if (op === Op.Ternary) {
-            const middle_expr = expr(ctx, Op.Root);
-            let right_expr = null;
-            if (peek_token(ctx) === ":") {
-                next_token(ctx); // consume ":"
-                right_expr = expr(ctx, op);
-            }
-            left_expr = ternary(left_expr, middle_expr, right_expr);
-        }
-        // ...
+  while (has_token(ctx)) {
+    // ...
+    if (op === Op.Ternary) {
+      const middle_expr = expr(ctx, Op.Root);
+      let right_expr = null;
+      if (peek_token(ctx) === ":") {
+        next_token(ctx); // consume ":"
+        right_expr = expr(ctx, op);
+      }
+      left_expr = ternary(left_expr, middle_expr, right_expr);
     }
-    return left_expr;
+    // ...
+  }
+  return left_expr;
 }
 ```
 
@@ -506,23 +506,23 @@ ambiguous and requires parentheses to fix.
 
 ```ts
 function error_assoc(op) {
-    return new Error(
-        `Operator "${op}" is not associative and requires parentheses`,
-    );
+  return new Error(
+    `Operator "${op}" is not associative and requires parentheses`,
+  );
 }
 
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        // ...
-        const order = cmp_precedence(op, parent_op);
-        if (order === "<") break;
-        if (order === "=") {
-            if (assoc(op) === "left") break;
-            if (assoc(op) === "none") throw error_assoc(op);
-        }
-        // ...
+  while (has_token(ctx)) {
+    // ...
+    const order = cmp_precedence(op, parent_op);
+    if (order === "<") break;
+    if (order === "=") {
+      if (assoc(op) === "left") break;
+      if (assoc(op) === "none") throw error_assoc(op);
     }
-    return left_expr;
+    // ...
+  }
+  return left_expr;
 }
 ```
 
@@ -547,22 +547,22 @@ The parser's `cmp_precedence()` now returns `"!"` for unrelated operators.
 
 ```ts
 function error_unrelated_ops(op1, op2) {
-    return new Error(`"${op1}" is unrelated to "${op2}"`);
+  return new Error(`"${op1}" is unrelated to "${op2}"`);
 }
 
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        // ...
-        const order = cmp_precedence(op, parent_op);
-        if (order === "!") throw error_unrelated_ops(op, parent_op);
-        if (order === "<") break;
-        if (order === "=") {
-            if (assoc(op) === "left") break;
-            if (assoc(op) === "none") throw error_assoc(op);
-        }
-        // ...
+  while (has_token(ctx)) {
+    // ...
+    const order = cmp_precedence(op, parent_op);
+    if (order === "!") throw error_unrelated_ops(op, parent_op);
+    if (order === "<") break;
+    if (order === "=") {
+      if (assoc(op) === "left") break;
+      if (assoc(op) === "none") throw error_assoc(op);
     }
-    return left_expr;
+    // ...
+  }
+  return left_expr;
 }
 ```
 
@@ -603,37 +603,37 @@ Encode the precedence table in TypeScript.
 
 ```ts
 const enum Op {
-    PostfixPlusPlus,
-    PostfixMinusMinus,
-    Subscript,
-    // ... remaining operators
+  PostfixPlusPlus,
+  PostfixMinusMinus,
+  Subscript,
+  // ... remaining operators
 }
 const enum Group {
-    Postfix,
-    Prefix,
-    BitwiseShift,
-    // ... remaining groups
+  Postfix,
+  Prefix,
+  BitwiseShift,
+  // ... remaining groups
 }
 const groups = [
-    {
-        id: Group.Postfix,
-        ops: [Op.PostfixPlusPlus, Op.PostfixMinusMinus /* , ... */],
-        assoc: "none",
-        gt: [Group.Prefix],
-    },
-    {
-        id: Group.Prefix,
-        ops: [Op.PrefixPlusPlus, Op.PrefixMinusMinus /* , ... */],
-        assoc: "none",
-        gt: [Group.BitwiseShift, Group.Exponentiation],
-    },
-    {
-        id: Group.BitwiseShift,
-        ops: [Op.BitwiseShiftLeft, Op.BitwiseShiftRight],
-        assoc: "none",
-        gt: [Group.Comparison],
-    },
-    // ... remaining groups
+  {
+    id: Group.Postfix,
+    ops: [Op.PostfixPlusPlus, Op.PostfixMinusMinus /* , ... */],
+    assoc: "none",
+    gt: [Group.Prefix],
+  },
+  {
+    id: Group.Prefix,
+    ops: [Op.PrefixPlusPlus, Op.PrefixMinusMinus /* , ... */],
+    assoc: "none",
+    gt: [Group.BitwiseShift, Group.Exponentiation],
+  },
+  {
+    id: Group.BitwiseShift,
+    ops: [Op.BitwiseShiftLeft, Op.BitwiseShiftRight],
+    assoc: "none",
+    gt: [Group.Comparison],
+  },
+  // ... remaining groups
 ];
 ```
 
@@ -644,10 +644,10 @@ const map_op_to_group = new Map<Op, Group>();
 const map_op_to_assoc = new Map<Op, "left" | "right" | "none">();
 
 for (const group of groups) {
-    for (const op of group.ops) {
-        map_op_to_group.set(op, group.id);
-        map_op_to_assoc.set(op, group.assoc);
-    }
+  for (const op of group.ops) {
+    map_op_to_group.set(op, group.id);
+    map_op_to_assoc.set(op, group.assoc);
+  }
 }
 ```
 
@@ -655,7 +655,7 @@ for (const group of groups) {
 
 ```ts
 function assoc(op) {
-    return map_op_to_assoc.get(op)!;
+  return map_op_to_assoc.get(op)!;
 }
 ```
 
@@ -667,17 +667,17 @@ const precedence_gt = new Map<Group, Set<Group>>();
 
 for (const src of groups) precedence_gt.set(src.id, new Set(src.gt));
 for (const [_, dsts] of precedence_gt) {
-    const explore = [...dsts];
-    while (explore.length) {
-        const dst = explore.pop()!;
-        dsts.add(dst);
-        const next_dsts = precedence_gt.get(dst)!;
-        for (const new_dst of next_dsts) {
-            if (!dsts.has(new_dst)) {
-                explore.push(new_dst);
-            }
-        }
+  const explore = [...dsts];
+  while (explore.length) {
+    const dst = explore.pop()!;
+    dsts.add(dst);
+    const next_dsts = precedence_gt.get(dst)!;
+    for (const new_dst of next_dsts) {
+      if (!dsts.has(new_dst)) {
+        explore.push(new_dst);
+      }
     }
+  }
 }
 ```
 
@@ -685,12 +685,12 @@ for (const [_, dsts] of precedence_gt) {
 
 ```ts
 function cmp_precedence(op1, op2) {
-    const group1 = map_op_to_group.get(op1)!;
-    const group2 = map_op_to_group.get(op2)!;
-    if (group1 === group2) return "=";
-    if (precedence_gt.get(group1)!.has(group2)) return ">";
-    if (precedence_gt.get(group2)!.has(group1)) return "<";
-    return "!";
+  const group1 = map_op_to_group.get(op1)!;
+  const group2 = map_op_to_group.get(op2)!;
+  if (group1 === group2) return "=";
+  if (precedence_gt.get(group1)!.has(group2)) return ">";
+  if (precedence_gt.get(group2)!.has(group1)) return "<";
+  return "!";
 }
 ```
 
@@ -704,25 +704,25 @@ Start with the head parser.
 
 ```ts
 function error_bad_token(token) {
-    return new Error(`Bad token "${token}"`);
+  return new Error(`Bad token "${token}"`);
 }
 
 function expr_head(ctx) {
-    const token = next_token(ctx);
-    if (token === "(") {
-        const right_expr = expr(ctx, Op.Root);
-        const rparen = next_token(ctx);
-        if (rparen !== ")") throw error_bad_token(rparen, ")");
-        return right_expr;
-    } else if (is_number_token(token)) {
-        return number(token);
-    } else if (is_prefix_op_token(token)) {
-        const op = prefix_op(token);
-        const right_expr = expr(ctx, op);
-        return prefix(op, right_expr);
-    } else {
-        throw error_bad_token(token ?? "EOF");
-    }
+  const token = next_token(ctx);
+  if (token === "(") {
+    const right_expr = expr(ctx, Op.Root);
+    const rparen = next_token(ctx);
+    if (rparen !== ")") throw error_bad_token(rparen, ")");
+    return right_expr;
+  } else if (is_number_token(token)) {
+    return number(token);
+  } else if (is_prefix_op_token(token)) {
+    const op = prefix_op(token);
+    const right_expr = expr(ctx, op);
+    return prefix(op, right_expr);
+  } else {
+    throw error_bad_token(token ?? "EOF");
+  }
 }
 ```
 
@@ -730,40 +730,40 @@ And now the tail parser.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        const token = peek_token(ctx);
-        if (token === ")" || token === "]" || token === ":") break;
-        const op = tail_op(token);
-        if (op === undefined) throw error_bad_token(token);
-        const order = cmp_precedence(op, parent_op);
-        if (order === "!") throw error_unrelated_ops(op, parent_op);
-        if (order === "<") break;
-        if (order === "=") {
-            if (assoc(op) === "left") break;
-            if (assoc(op) === "none") throw error_assoc(op);
-        }
-        next_token(ctx);
-        if (op === Op.Ternary) {
-            const middle_expr = expr(ctx, Op.Root);
-            let right_expr = undefined;
-            if (peek_token(ctx) === ":") {
-                next_token(ctx);
-                right_expr = expr(ctx, op);
-            }
-            left_expr = ternary(left_expr, middle_expr, right_expr);
-        } else if (op === Op.Subscript) {
-            const middle_expr = expr(ctx, Op.Root);
-            const rbracket = next_token(ctx);
-            if (rbracket !== "]") throw error_bad_token(rbracket);
-            left_expr = subscript(left_expr, middle_expr);
-        } else if (is_postfix_op(op)) {
-            left_expr = postfix(op, left_expr);
-        } else if (is_infix_op(op)) {
-            const right_expr = expr(ctx, op);
-            left_expr = infix(op, left_expr, right_expr);
-        }
+  while (has_token(ctx)) {
+    const token = peek_token(ctx);
+    if (token === ")" || token === "]" || token === ":") break;
+    const op = tail_op(token);
+    if (op === undefined) throw error_bad_token(token);
+    const order = cmp_precedence(op, parent_op);
+    if (order === "!") throw error_unrelated_ops(op, parent_op);
+    if (order === "<") break;
+    if (order === "=") {
+      if (assoc(op) === "left") break;
+      if (assoc(op) === "none") throw error_assoc(op);
     }
-    return left_expr;
+    next_token(ctx);
+    if (op === Op.Ternary) {
+      const middle_expr = expr(ctx, Op.Root);
+      let right_expr = undefined;
+      if (peek_token(ctx) === ":") {
+        next_token(ctx);
+        right_expr = expr(ctx, op);
+      }
+      left_expr = ternary(left_expr, middle_expr, right_expr);
+    } else if (op === Op.Subscript) {
+      const middle_expr = expr(ctx, Op.Root);
+      const rbracket = next_token(ctx);
+      if (rbracket !== "]") throw error_bad_token(rbracket);
+      left_expr = subscript(left_expr, middle_expr);
+    } else if (is_postfix_op(op)) {
+      left_expr = postfix(op, left_expr);
+    } else if (is_infix_op(op)) {
+      const right_expr = expr(ctx, op);
+      left_expr = infix(op, left_expr, right_expr);
+    }
+  }
+  return left_expr;
 }
 ```
 
@@ -806,6 +806,9 @@ Code for the final parser is
 [here](https://github.com/eejdoowad/dawoodjee.com/blob/main/src/static/assets/pratt-parsing/parser.ts)
 It includes a scanner and makes greater use of types and enums.
 
+Alternative code that uses an explicit stack (instead of the call stack) is
+[here](https://github.com/eejdoowad/dawoodjee.com/blob/main/src/static/assets/pratt-parsing/stack_parser.ts).
+
 Run tests with `deno test parser.ts`.
 
 ### Binding Power
@@ -826,12 +829,12 @@ The condition for exiting a level is simplified to a binding power comparison.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        // ...
-        if (binding_power_right(op) < binding_power_left(parent_op)) break;
-        // ...
-    }
-    return left_expr;
+  while (has_token(ctx)) {
+    // ...
+    if (binding_power_right(op) < binding_power_left(parent_op)) break;
+    // ...
+  }
+  return left_expr;
 }
 ```
 
@@ -840,14 +843,14 @@ associativity checks.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        // ...
-        const order = cmp_precedence(op, parent_op);
-        if (order === "<") break;
-        if (order === "=" && assoc(op) === "left") break;
-        // ...
-    }
-    return left_expr;
+  while (has_token(ctx)) {
+    // ...
+    const order = cmp_precedence(op, parent_op);
+    if (order === "<") break;
+    if (order === "=" && assoc(op) === "left") break;
+    // ...
+  }
+  return left_expr;
 }
 ```
 
@@ -856,18 +859,18 @@ good language design.
 
 ```ts
 function expr_tail(ctx, parent_op, left_expr) {
-    while (has_token(ctx)) {
-        // ...
-        const order = cmp_precedence(op, parent_op);
-        if (order === "!") throw error_unrelated_ops(op, parent_op);
-        if (order === "<") break;
-        if (order === "=") {
-            if (assoc(op) === "left") break;
-            if (assoc(op) === "none") throw error_assoc(op);
-        }
-        // ...
+  while (has_token(ctx)) {
+    // ...
+    const order = cmp_precedence(op, parent_op);
+    if (order === "!") throw error_unrelated_ops(op, parent_op);
+    if (order === "<") break;
+    if (order === "=") {
+      if (assoc(op) === "left") break;
+      if (assoc(op) === "none") throw error_assoc(op);
     }
-    return left_expr;
+    // ...
+  }
+  return left_expr;
 }
 ```
 
